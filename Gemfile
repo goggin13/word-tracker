@@ -7,4 +7,5 @@ gem 'foreman', '0.63.0'
 group :development, :test do
   gem 'rspec-rails', '2.14.1'
   gem 'webmock', '1.17.1'
+  gem 'factory_girl_rails', '4.3.0'
 end
