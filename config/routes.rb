@@ -1,4 +1,7 @@
 MyWords::Application.routes.draw do
+  get 'definitions/define' => 'definitions#define', as: :define
+  resources :definitions
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -1,0 +1,65 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://api.wordnik.com/v4/word.json/hysteria/definitions
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - ruby-4.12
+      Content-Type:
+      - application/json
+      Api-Key:
+      - f1388834b101ab19ad0a206a0030c9975e679b99a05a1f1cc
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Allow-Headers:
+      - Origin, X-Atmosphere-tracking-id, X-Atmosphere-Framework, X-Cache-Date, Content-Type,
+        X-Atmosphere-Transport, X-Remote, api_key, auth_token, *
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Headers:
+      - Origin, X-Atmosphere-tracking-id, X-Atmosphere-Framework, X-Cache-Date, Content-Type,
+        X-Atmosphere-Transport,  X-Remote, api_key, *
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Fri, 24 Jan 2014 20:47:35 GMT
+      Wordnik-Api-Version:
+      - 4.12.20
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        W3sidGV4dFByb25zIjpbXSwic291cmNlRGljdGlvbmFyeSI6ImFoZC1sZWdh
+        Y3kiLCJleGFtcGxlVXNlcyI6W10sInJlbGF0ZWRXb3JkcyI6W10sImxhYmVs
+        cyI6W10sImNpdGF0aW9ucyI6W10sIndvcmQiOiJoeXN0ZXJpYSIsInRleHQi
+        OiJCZWhhdmlvciBleGhpYml0aW5nIGV4Y2Vzc2l2ZSBvciB1bmNvbnRyb2xs
+        YWJsZSBlbW90aW9uLCBzdWNoIGFzIGZlYXIgb3IgcGFuaWMuIiwic2VxdWVu
+        Y2UiOiIwIiwic2NvcmUiOjAuMCwicGFydE9mU3BlZWNoIjoibm91biIsImF0
+        dHJpYnV0aW9uVGV4dCI6ImZyb20gVGhlIEFtZXJpY2FuIEhlcml0YWdlwq4g
+        RGljdGlvbmFyeSBvZiB0aGUgRW5nbGlzaCBMYW5ndWFnZSwgNHRoIEVkaXRp
+        b24ifSx7InRleHRQcm9ucyI6W10sInNvdXJjZURpY3Rpb25hcnkiOiJhaGQt
+        bGVnYWN5IiwiZXhhbXBsZVVzZXMiOltdLCJyZWxhdGVkV29yZHMiOltdLCJs
+        YWJlbHMiOltdLCJjaXRhdGlvbnMiOltdLCJ3b3JkIjoiaHlzdGVyaWEiLCJ0
+        ZXh0IjoiQSBtZW50YWwgZGlzb3JkZXIgY2hhcmFjdGVyaXplZCBieSBlbW90
+        aW9uYWwgZXhjaXRhYmlsaXR5IGFuZCBzb21ldGltZXMgYnkgYW1uZXNpYSBv
+        ciBhIHBoeXNpY2FsIGRlZmljaXQsIHN1Y2ggYXMgcGFyYWx5c2lzLCBvciBh
+        IHNlbnNvcnkgZGVmaWNpdCwgd2l0aG91dCBhbiBvcmdhbmljIGNhdXNlLiIs
+        InNlcXVlbmNlIjoiMSIsInNjb3JlIjowLjAsInBhcnRPZlNwZWVjaCI6Im5v
+        dW4iLCJhdHRyaWJ1dGlvblRleHQiOiJmcm9tIFRoZSBBbWVyaWNhbiBIZXJp
+        dGFnZcKuIERpY3Rpb25hcnkgb2YgdGhlIEVuZ2xpc2ggTGFuZ3VhZ2UsIDR0
+        aCBFZGl0aW9uIn1d
+    http_version: 
+  recorded_at: Fri, 24 Jan 2014 20:47:27 GMT
+recorded_with: VCR 2.8.0
