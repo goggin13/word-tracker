@@ -6,13 +6,23 @@ describe "Definitions", type: "request" do
       FactoryGirl.create(:definition, :word => "word1")
       FactoryGirl.create(:definition, :word => "word2")
 
-      get definitions_path
+      get definitions_path(format: "json")
 
       response.status.should == 200
       result = JSON.parse(response.body)
 
       result[0]["word"].should == "word1"
       result[1]["word"].should == "word2"
+    end
+
+    it "renders an HTML page with all of the words" do
+      definition = FactoryGirl.create(:definition, word: "hysteria", text: "definition a")
+
+      visit definitions_path(format: "html")
+
+      page.should have_content "hysteria"
+      page.should have_content "definition a"
+      page.should have_link "hysteria", href: edit_definition_path(definition)
     end
   end
 

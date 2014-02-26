@@ -4,7 +4,10 @@ class DefinitionsController < ApplicationController
   # GET /definitions
   def index
     @definitions = Definition.all
-    render :json => @definitions
+    respond_to do |format|
+      format.html
+      format.json { render :json => @definitions }
+    end
   end
 
   # GET /definitions/1
@@ -62,6 +65,6 @@ class DefinitionsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def definition_params
-      params.require(:definition).permit(:word, :definition, :example)
+      params.require(:definition).permit(:word, :text, :example)
     end
 end
