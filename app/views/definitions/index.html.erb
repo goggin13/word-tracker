@@ -1,19 +1,29 @@
-<h1>Listing definitions</h1>
+<%- model_class = Definition -%>
 
-<table>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+</div>
+
+<table class="table table-striped">
   <tbody>
     <% @definitions.each do |definition| %>
       <tr>
-        <td><%= link_to definition.word, edit_definition_path(definition) %></td>
+        <td><%= link_to definition.word, definition_path(definition) %></td>
         <td><%= definition.text %></td>
-        <td><%= definition.example %></td>
-        <td><%= link_to 'Show', definition %></td>
-        <td><%= link_to 'Destroy', definition, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_definition_path(definition), :class => 'btn btn-mini' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      definition_path(definition),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-mini btn-danger' %>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
-
-<%= link_to 'New Definition', new_definition_path %>
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_definition_path,
+            :class => 'btn btn-primary' %>

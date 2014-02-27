@@ -7,6 +7,7 @@ gem 'wordnik', '4.12'
 gem 'thin', '1.6.1'
 gem 'jquery-rails', '3.1.0'
 gem 'turbolinks', '2.2.1'
+gem 'twitter-bootstrap-rails', '2.2.8'
 
 group :development, :test do
   gem 'rspec-rails', '2.14.1'

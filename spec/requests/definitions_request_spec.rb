@@ -22,7 +22,8 @@ describe "Definitions", type: "request" do
 
       page.should have_content "hysteria"
       page.should have_content "definition a"
-      page.should have_link "hysteria", href: edit_definition_path(definition)
+      page.should have_link "Edit", href: edit_definition_path(definition)
+      page.should have_link "hysteria", href: definition_path(definition)
     end
   end
 
