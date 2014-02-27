@@ -1,4 +1,7 @@
 MyWords::Application.routes.draw do
+
+  match '/heartbeat' => 'application#heartbeat', :via => :get
+
   get 'definitions/define' => 'definitions#define', as: :define
   resources :definitions
 
