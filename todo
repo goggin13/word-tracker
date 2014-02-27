@@ -1,0 +1,4 @@
+cap deploy needs to
+  bundle
+  rake assets:precompile RAILS_ENV=production
+  touch tmp/restart

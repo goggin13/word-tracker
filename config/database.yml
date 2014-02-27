@@ -39,7 +39,9 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  database: my-words_production
+  database: my_words
   pool: 5
-  username: my-words
-  password:
+  username: pair
+  password: pair
+  port: 5433
+  host: localhost
