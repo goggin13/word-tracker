@@ -25,13 +25,8 @@ class DefinitionsController < ApplicationController
 
   # POST /definitions
   def create
-    @definition = Definition.new(definition_params)
-
-    if @definition.save
-      redirect_to @definition, notice: 'Definition was successfully created.'
-    else
-      render action: 'new'
-    end
+    definitions = Definition.find_or_create_for_word(params[:definition][:word])
+    redirect_to definitions[0], notice: "Definition was successfully created."
   end
 
   # PATCH/PUT /definitions/1

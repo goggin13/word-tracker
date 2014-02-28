@@ -61,43 +61,6 @@ describe DefinitionsController do
     end
   end
 
-  describe "POST create" do
-    describe "with valid params" do
-      it "creates a new Definition" do
-        expect {
-          post :create, {:definition => valid_attributes}, valid_session
-        }.to change(Definition, :count).by(1)
-      end
-
-      it "assigns a newly created definition as @definition" do
-        post :create, {:definition => valid_attributes}, valid_session
-        assigns(:definition).should be_a(Definition)
-        assigns(:definition).should be_persisted
-      end
-
-      it "redirects to the created definition" do
-        post :create, {:definition => valid_attributes}, valid_session
-        response.should redirect_to(Definition.last)
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns a newly created but unsaved definition as @definition" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        Definition.any_instance.stub(:save).and_return(false)
-        post :create, {:definition => { "word" => "invalid value" }}, valid_session
-        assigns(:definition).should be_a_new(Definition)
-      end
-
-      it "re-renders the 'new' template" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        Definition.any_instance.stub(:save).and_return(false)
-        post :create, {:definition => { "word" => "invalid value" }}, valid_session
-        response.should render_template("new")
-      end
-    end
-  end
-
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested definition" do
