@@ -1,5 +1,6 @@
 MyWords::Application.routes.draw do
 
+  devise_for :users
   match '/heartbeat' => 'application#heartbeat', :via => :get
 
   get 'definitions/define' => 'definitions#define', as: :define
