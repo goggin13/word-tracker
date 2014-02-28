@@ -20,6 +20,7 @@ end
 
 group :development do
   gem 'capistrano', '2.15.4'
+  gem 'rvm-capistrano', '1.5.1'
 end
 
 group :test do
