@@ -46,7 +46,9 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
+
           <a class="brand" href="#">MyWords</a>
+
           <div class="container nav-collapse">
             <ul class="nav">
               <li><%= link_to "Link1", "/path1"  %></li>
@@ -81,9 +83,11 @@
               <h3>Sidebar</h3>
               <ul class="nav nav-list">
                 <li class="nav-header">Sidebar</li>
-                <li><%= link_to "Link1", "/path1"  %></li>
-                <li><%= link_to "Link2", "/path2"  %></li>
-                <li><%= link_to "Link3", "/path3"  %></li>
+
+                <% @most_recent.each do |definition| %>
+                  <li><%= link_to definition.word, definition_path(definition) %></li>
+                <% end %>
+
               </ul>
             </div><!--/.well -->
           </div><!--/span-->

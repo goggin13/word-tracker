@@ -1,10 +1,13 @@
 class ApplicationController < ActionController::Base
-  # Prevent CSRF attacks by raising an exception.
-  # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
+  before_filter :set_most_recent
 
   def heartbeat
     r = ActiveRecord::Base.connection.execute("select 1 as one")
     render text: "OK", status: (r[0]["one"] == "1" ? 200 : 500)
+  end
+
+  def set_most_recent
+    @most_recent = Definition.order("created_at DESC").limit(10)
   end
 end
