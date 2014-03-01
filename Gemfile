@@ -2,7 +2,6 @@ source 'https://rubygems.org'
 
 gem 'rails', '4.0.2'
 gem 'pg', '0.17.1'
-gem 'foreman', '0.63.0'
 gem 'wordnik', '4.12'
 gem 'thin', '1.6.1'
 gem 'jquery-rails', '3.1.0'

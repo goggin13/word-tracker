@@ -28,7 +28,7 @@ set :rails_env, "production"
 set :keep_releases, 5
 set :rvm_ruby_string, :local
 
-# if you want to clean up old releases on each deploy uncomment this:
+before "deploy:assets:precompile", "deploy:symlink_config_files"
 after "deploy:restart", "deploy:cleanup"
 
 # if you"re still using the script/reaper helper you will need
@@ -49,5 +49,14 @@ namespace :deploy do
   task :restart do
     run "rvm current"
     run "#{ try_sudo } touch #{ File.join(current_path, "tmp", "restart.txt") }"
+  end
+
+  desc "Link shared files"
+  task :symlink_config_files do
+    symlinks = {
+      # "#{shared_path}/config/database.yml" => "#{release_path}/config/database.yml",
+      "#{shared_path}/config/local_env.yml" => "#{release_path}/config/local_env.yml"
+    }
+    run symlinks.map{|from, to| "ln -nfs #{from} #{to}"}.join(" && ")
   end
 end
