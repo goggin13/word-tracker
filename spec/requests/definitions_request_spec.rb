@@ -53,6 +53,15 @@ describe "Definitions", type: "request" do
         result["definitions"][1].should == "A mental disorder characterized by emotional excitability and sometimes by amnesia or a physical deficit, such as paralysis, or a sensory deficit, without an organic cause."
       end
     end
+
+    it "returns 422 if the definition cannot be located" do
+      VCR.use_cassette "not_found_api_response" do
+        get define_path, :word => "this-word-wont-be-found"
+        response.status.should == 422
+        result = JSON.parse(response.body)
+        result["errors"][0].should == "No definition found for 'this-word-wont-be-found'"
+      end
+    end
   end
 
   describe "new definitions" do
@@ -84,6 +93,20 @@ describe "Definitions", type: "request" do
 
       def2.word.should == "hysteria"
       def2.text.should == "A mental disorder characterized by emotional excitability and sometimes by amnesia or a physical deficit, such as paralysis, or a sensory deficit, without an organic cause."
+    end
+
+    it "re-renders the form with an error if wordnik does not have the word" do
+      visit new_definition_path
+
+      VCR.use_cassette "not_found_api_response" do
+        fill_in "Word", with: "this-word-wont-be-found"
+
+        expect do
+          click_button "Create Definition"
+        end.to change(Definition, :count).by(0)
+      end
+
+      page.should have_content "No definition found for 'this-word-wont-be-found'"
     end
   end
 

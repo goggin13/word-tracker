@@ -47,5 +47,11 @@ describe Definition do
 
       expect { Definition.find_or_create_for_word("hysteria") }.to change(Definition, :count).by(0)
     end
+
+    it "returns nil if there is no definition found in wordnik" do
+      VCR.use_cassette "not_found_api_response" do
+         Definition.find_or_create_for_word("this-word-wont-be-found").should == []
+      end
+    end
   end
 end

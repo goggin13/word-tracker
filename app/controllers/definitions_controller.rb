@@ -25,8 +25,13 @@ class DefinitionsController < ApplicationController
 
   # POST /definitions
   def create
-    definitions = Definition.find_or_create_for_word(params[:definition][:word])
-    redirect_to definitions[0], notice: "Definition was successfully created."
+    word = params[:definition][:word]
+    definitions = Definition.find_or_create_for_word(word)
+    if definitions.length > 0
+      redirect_to definitions[0], notice: "Definition was successfully created."
+    else
+      redirect_to new_definition_path, alert: "No definition found for '#{word}'"
+    end
   end
 
   # PATCH/PUT /definitions/1
@@ -46,10 +51,18 @@ class DefinitionsController < ApplicationController
 
   def define
     definitions = Definition.find_or_create_for_word(params[:word])
-    render :json => {
-      word: params[:word],
-      definitions: definitions.map(&:text)
-    }
+    if definitions.length > 0
+      render :json => {
+        word: params[:word],
+        definitions: definitions.map(&:text),
+      }
+    else
+      render :json => {
+        word: params[:word],
+        errors: ["No definition found for '#{params[:word]}'"],
+      },
+      status: 422
+    end
   end
 
   private

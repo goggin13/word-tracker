@@ -1,0 +1,46 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://api.wordnik.com/v4/word.json/this-word-wont-be-found/definitions
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - ruby-4.12
+      Content-Type:
+      - application/json
+      Api-Key:
+      - f1388834b101ab19ad0a206a0030c9975e679b99a05a1f1cc
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Allow-Headers:
+      - Origin, X-Atmosphere-tracking-id, X-Atmosphere-Framework, X-Cache-Date, Content-Type,
+        X-Atmosphere-Transport, X-Remote, api_key, auth_token, *
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - ! '*'
+      Access-Control-Request-Headers:
+      - Origin, X-Atmosphere-tracking-id, X-Atmosphere-Framework, X-Cache-Date, Content-Type,
+        X-Atmosphere-Transport,  X-Remote, api_key, *
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Thu, 06 Mar 2014 23:07:31 GMT
+      Wordnik-Api-Version:
+      - 4.12.20
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+    body:
+      encoding: US-ASCII
+      string: ! '[]'
+    http_version: 
+  recorded_at: Thu, 06 Mar 2014 23:10:50 GMT
+recorded_with: VCR 2.8.0
