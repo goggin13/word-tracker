@@ -87,7 +87,7 @@ describe "Definitions", type: "request" do
     end
   end
 
-  describe "new definitions" do
+  describe "edit definitions" do
     it "has form fields for example and text" do
       visit edit_definition_path(FactoryGirl.create(:definition))
 
