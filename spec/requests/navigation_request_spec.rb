@@ -1,6 +1,11 @@
 require "spec_helper"
 
 describe "navigation" do
+  it "has a link to the home page" do
+    visit "/"
+    page.should have_link "MyWords", href: "/"
+  end
+
   describe "sidebar" do
     it "contains links to the most recently posted 10 words" do
       definitions = (0..9).map { FactoryGirl.create(:definition) }
