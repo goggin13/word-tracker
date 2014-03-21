@@ -1,5 +1,5 @@
 class Word < ActiveRecord::Base
-  has_many :definitions
+  has_many :definitions, dependent: :destroy
 
   def first_definition
     definitions.length > 0 ? definitions.first.text : ""

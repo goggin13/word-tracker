@@ -1,6 +1,16 @@
 require 'spec_helper'
 
 describe Word do
+
+  describe "definitions" do
+    it "is destroyed with the word" do
+      definition = FactoryGirl.create(:definition, text: "my-definition-1")
+      definition.word.destroy
+
+      Definition.find_by_id(definition.id).should be_nil
+    end
+  end
+
   describe "self.find_or_create_with_definitions" do
     it "returns existing definitions if they exist" do
       word = FactoryGirl.create(:word, text: "my-word")
