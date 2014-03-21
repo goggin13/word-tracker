@@ -3,10 +3,12 @@ MyWords::Application.routes.draw do
   devise_for :users
   match '/heartbeat' => 'application#heartbeat', :via => :get
 
-  get 'definitions/define' => 'definitions#define', as: :define
-  resources :definitions
+  get 'words/define' => 'words#define', as: :define
+  resources :words do
+    resources :definitions
+  end
 
-  root 'definitions#index'
+  root 'words#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

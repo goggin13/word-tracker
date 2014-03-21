@@ -8,22 +8,13 @@ describe "navigation" do
 
   describe "sidebar" do
     it "contains links to the most recently posted 10 words" do
-      definitions = (0..9).map { FactoryGirl.create(:definition) }
+      words = (0..9).map { FactoryGirl.create(:word) }
       visit "/"
 
       sidebar = page.find(".sidebar-nav")
-      definitions.each do |definition|
-        sidebar.should have_link definition.word, definition_path(definition)
+      words.each do |word|
+        sidebar.should have_link word.text, word_path(word)
       end
-    end
-
-    xit "doesn't contain duplicates" do
-      FactoryGirl.create(:definition, word: "hello")
-      FactoryGirl.create(:definition, word: "hello")
-      visit "/"
-
-      sidebar = page.find(".sidebar-nav")
-      sidebar.should have_link "hello", count: 1
     end
   end
 end

@@ -23,7 +23,9 @@ describe DefinitionsController do
   # This should return the minimal set of attributes required to create a valid
   # Definition. As you add validations to Definition, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { { "word" => "MyString" } }
+  def valid_attributes
+    { "text" => "MyString" }
+  end
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -32,92 +34,140 @@ describe DefinitionsController do
 
   describe "GET index" do
     it "assigns all definitions as @definitions" do
-      definition = Definition.create! valid_attributes
-      get :index, {}, valid_session
+      definition = FactoryGirl.create(:definition)
+      get :index, { "word_id" => definition.word.id }, valid_session
       assigns(:definitions).should eq([definition])
     end
   end
 
   describe "GET show" do
     it "assigns the requested definition as @definition" do
-      definition = Definition.create! valid_attributes
-      get :show, {:id => definition.to_param}, valid_session
+      definition = FactoryGirl.create(:definition)
+      get :show, {:word_id => definition.word.id, :id => definition.to_param}, valid_session
       assigns(:definition).should eq(definition)
     end
   end
 
   describe "GET new" do
     it "assigns a new definition as @definition" do
-      get :new, {}, valid_session
+      get :new, { "word_id" => FactoryGirl.create(:word).id }, valid_session
       assigns(:definition).should be_a_new(Definition)
     end
   end
 
   describe "GET edit" do
     it "assigns the requested definition as @definition" do
-      definition = Definition.create! valid_attributes
-      get :edit, {:id => definition.to_param}, valid_session
+      definition = FactoryGirl.create(:definition)
+      get :edit, {:word_id => definition.word.id, :id => definition.to_param}, valid_session
       assigns(:definition).should eq(definition)
     end
   end
 
+  describe "POST create" do
+    before do
+      @word = FactoryGirl.create(:word)
+    end
+
+    describe "with valid params" do
+      it "creates a new Definition" do
+        expect {
+          post :create, {:word_id => @word.id, :definition => valid_attributes}, valid_session
+        }.to change(Definition, :count).by(1)
+      end
+
+      it "assigns a newly created definition as @definition" do
+        post :create, {:word_id => @word.id, :definition => valid_attributes}, valid_session
+        assigns(:definition).should be_a(Definition)
+        assigns(:definition).should be_persisted
+      end
+
+      it "redirects to the created definition" do
+        post :create, {:word_id => @word.id, :definition => valid_attributes}, valid_session
+        response.should redirect_to(word_definition_path(@word, Definition.last))
+      end
+    end
+
+    describe "with invalid params" do
+      it "assigns a newly created but unsaved definition as @definition" do
+        # Trigger the behavior that occurs when invalid params are submitted
+        Definition.any_instance.stub(:save).and_return(false)
+        post :create, {:word_id => @word.id, :definition => { "text" => "invalid value" }}, valid_session
+        assigns(:definition).should be_a_new(Definition)
+      end
+
+      it "re-renders the 'new' template" do
+        # Trigger the behavior that occurs when invalid params are submitted
+        Definition.any_instance.stub(:save).and_return(false)
+        post :create, {:word_id => @word.id, :definition => { "text" => "invalid value" }}, valid_session
+        response.should render_template("new")
+      end
+    end
+  end
+
   describe "PUT update" do
+    before do
+      @word = FactoryGirl.create(:word)
+    end
+
     describe "with valid params" do
       it "updates the requested definition" do
-        definition = Definition.create! valid_attributes
+        definition = FactoryGirl.create(:definition, word: @word)
         # Assuming there are no other definitions in the database, this
         # specifies that the Definition created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        Definition.any_instance.should_receive(:update).with({ "word" => "MyString" })
-        put :update, {:id => definition.to_param, :definition => { "word" => "MyString" }}, valid_session
+        Definition.any_instance.should_receive(:update).with({ "text" => "MyString" })
+        put :update, {:word_id => @word.id, :id => definition.to_param, :definition => { "text" => "MyString" }}, valid_session
       end
 
       it "assigns the requested definition as @definition" do
-        definition = Definition.create! valid_attributes
-        put :update, {:id => definition.to_param, :definition => valid_attributes}, valid_session
+        definition = FactoryGirl.create(:definition, word: @word)
+        put :update, {:word_id => @word.id, :id => definition.to_param, :definition => valid_attributes}, valid_session
         assigns(:definition).should eq(definition)
       end
 
       it "redirects to the definition" do
-        definition = Definition.create! valid_attributes
-        put :update, {:id => definition.to_param, :definition => valid_attributes}, valid_session
-        response.should redirect_to(definition)
+        definition = FactoryGirl.create(:definition, word: @word)
+        put :update, {:word_id => @word.id, :id => definition.to_param, :definition => valid_attributes}, valid_session
+        response.should redirect_to(word_definition_path(@word, definition))
       end
     end
 
     describe "with invalid params" do
       it "assigns the definition as @definition" do
-        definition = Definition.create! valid_attributes
+        definition = FactoryGirl.create(:definition, word: @word)
         # Trigger the behavior that occurs when invalid params are submitted
         Definition.any_instance.stub(:save).and_return(false)
-        put :update, {:id => definition.to_param, :definition => { "word" => "invalid value" }}, valid_session
+        put :update, {:word_id => @word.id, :id => definition.to_param, :definition => { "text" => "invalid value" }}, valid_session
         assigns(:definition).should eq(definition)
       end
 
       it "re-renders the 'edit' template" do
-        definition = Definition.create! valid_attributes
+        definition = FactoryGirl.create(:definition, word: @word)
         # Trigger the behavior that occurs when invalid params are submitted
         Definition.any_instance.stub(:save).and_return(false)
-        put :update, {:id => definition.to_param, :definition => { "word" => "invalid value" }}, valid_session
+        put :update, {:word_id => @word.id, :id => definition.to_param, :definition => { "text" => "invalid value" }}, valid_session
         response.should render_template("edit")
       end
     end
   end
 
   describe "DELETE destroy" do
+    before do
+      @word = FactoryGirl.create(:word)
+    end
+
     it "destroys the requested definition" do
-      definition = Definition.create! valid_attributes
+      definition = FactoryGirl.create(:definition, word: @word)
       expect {
-        delete :destroy, {:id => definition.to_param}, valid_session
+        delete :destroy, {:word_id => @word.id, :id => definition.to_param}, valid_session
       }.to change(Definition, :count).by(-1)
     end
 
     it "redirects to the definitions list" do
-      definition = Definition.create! valid_attributes
-      delete :destroy, {:id => definition.to_param}, valid_session
-      response.should redirect_to(definitions_url)
+      definition = FactoryGirl.create(:definition, word: @word)
+      delete :destroy, {:word_id => @word.id, :id => definition.to_param}, valid_session
+      response.should redirect_to(word_definitions_url(@word))
     end
   end
-
 end

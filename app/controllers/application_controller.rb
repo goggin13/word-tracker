@@ -8,6 +8,6 @@ class ApplicationController < ActionController::Base
   end
 
   def set_most_recent
-    @most_recent = Definition.order("created_at DESC").limit(10)
+    @most_recent = Word.order("created_at DESC").limit(10)
   end
 end

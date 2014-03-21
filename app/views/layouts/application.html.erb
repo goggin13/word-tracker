@@ -84,8 +84,8 @@
               <ul class="nav nav-list">
                 <li class="nav-header">Sidebar</li>
 
-                <% @most_recent.each do |definition| %>
-                  <li><%= link_to definition.word, definition_path(definition) %></li>
+                <% @most_recent.each do |word| %>
+                  <li><%= link_to word.text, word_path(word) %></li>
                 <% end %>
 
               </ul>

@@ -1,4 +1,5 @@
 class DefinitionsController < ApplicationController
+  before_filter :_set_word
   before_action :set_definition, only: [:show, :edit, :update, :destroy]
 
   # GET /definitions
@@ -16,7 +17,7 @@ class DefinitionsController < ApplicationController
 
   # GET /definitions/new
   def new
-    @definition = Definition.new
+    @definition = Definition.new(word: @word)
   end
 
   # GET /definitions/1/edit
@@ -25,19 +26,19 @@ class DefinitionsController < ApplicationController
 
   # POST /definitions
   def create
-    word = params[:definition][:word]
-    definitions = Definition.find_or_create_for_word(word)
-    if definitions.length > 0
-      redirect_to definitions[0], notice: "Definition was successfully created."
+    @definition = @word.definitions.build(definition_params)
+
+    if @definition.save
+      redirect_to word_definition_path(@word, @definition), notice: 'Definition was successfully created.'
     else
-      redirect_to new_definition_path, alert: "No definition found for '#{word}'"
+      render action: 'new'
     end
   end
 
   # PATCH/PUT /definitions/1
   def update
     if @definition.update(definition_params)
-      redirect_to @definition, notice: 'Definition was successfully updated.'
+      redirect_to word_definition_path(@word, @definition), notice: 'Definition was successfully updated.'
     else
       render action: 'edit'
     end
@@ -46,23 +47,7 @@ class DefinitionsController < ApplicationController
   # DELETE /definitions/1
   def destroy
     @definition.destroy
-    redirect_to definitions_url, notice: 'Definition was successfully destroyed.'
-  end
-
-  def define
-    definitions = Definition.find_or_create_for_word(params[:word])
-    if definitions.length > 0
-      render :json => {
-        word: params[:word],
-        definitions: definitions.map(&:text),
-      }
-    else
-      render :json => {
-        word: params[:word],
-        errors: ["No definition found for '#{params[:word]}'"],
-      },
-      status: 422
-    end
+    redirect_to word_definitions_url(@word), notice: 'Definition was successfully destroyed.'
   end
 
   private
@@ -74,5 +59,9 @@ class DefinitionsController < ApplicationController
     # Only allow a trusted parameter "white list" through.
     def definition_params
       params.require(:definition).permit(:word, :text, :example)
+    end
+
+    def _set_word
+      @word = Word.find(params[:word_id])
     end
 end
