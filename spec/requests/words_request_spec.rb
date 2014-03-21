@@ -32,7 +32,6 @@ describe "Words", type: "words" do
       page.should have_content "word1"
       page.should have_content "word1 means word1"
       page.should have_link "word1", href: word_path(word)
-      page.should have_link "Edit", href: edit_word_path(word)
     end
 
     it "renders an HTML page with all of the words even if they don't have definitions" do

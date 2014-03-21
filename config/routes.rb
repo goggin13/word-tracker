@@ -4,7 +4,7 @@ MyWords::Application.routes.draw do
   match '/heartbeat' => 'application#heartbeat', :via => :get
 
   get 'words/define' => 'words#define', as: :define
-  resources :words do
+  resources :words, except: [:update, :edit] do
     resources :definitions
   end
 
