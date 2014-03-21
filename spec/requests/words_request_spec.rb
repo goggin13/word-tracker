@@ -119,4 +119,24 @@ describe "Words", type: "words" do
       page.should have_content "No definition found for 'this-word-wont-be-found'"
     end
   end
+
+  describe "show" do
+    it "lists the word and its definitions" do
+      word = FactoryGirl.create(:word, text: "my-word")
+      definition_1 = FactoryGirl.create(:definition, word: word, text: "my-definition-1")
+      definition_2 = FactoryGirl.create(:definition, word: word, text: "my-definition-2")
+
+      visit word_path(word)
+
+      page.should have_content "my-word"
+      page.should have_content "my-definition-1"
+      page.should have_content "my-definition-2"
+
+      page.should have_link "Edit", href: edit_word_definition_path(word, definition_1)
+      page.should have_link "Edit", href: edit_word_definition_path(word, definition_2)
+
+      page.should have_link "Delete", href: word_definition_path(word, definition_1)
+      page.should have_link "Delete", href: word_definition_path(word, definition_2)
+    end
+  end
 end

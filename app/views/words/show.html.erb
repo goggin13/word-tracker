@@ -1,9 +1,22 @@
-<p id="notice"><%= notice %></p>
+<div class="page-header">
+  <h1><%= @word.text %> ( <%= @word.definitions.size %> )</h1>
+</div>
 
-<p>
-  <strong>Text:</strong>
-  <%= @word.text %>
-</p>
-
-<%= link_to 'Edit', edit_word_path(@word) %> |
-<%= link_to 'Back', words_path %>
+<table class="table table-striped">
+  <tbody>
+    <% @word.definitions.each do |definition| %>
+      <tr>
+        <td><%= definition.text %></td>
+        <td>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_word_definition_path(@word, definition), :class => 'btn btn-mini' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      word_definition_path(@word, definition),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-mini btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
