@@ -1,0 +1,1 @@
+source /home/goggin/.aws && cd /home/goggin/projects/word-tracker/current && bundle exec rake pg:backup
