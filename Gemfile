@@ -10,6 +10,8 @@ gem 'twitter-bootstrap-rails', '2.2.8'
 gem 'therubyracer', '0.12.1'
 gem 'uglifier', '2.4.0'
 gem 'devise', '3.2.3'
+gem 'aws-s3'
+gem 'zip'
 
 group :development, :test do
   gem 'rspec-rails', '2.14.1'
