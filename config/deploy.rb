@@ -11,7 +11,7 @@ default_run_options[:pty] = true  # Must be set for the password prompt
 set :repository, "git@github.com:goggin13/word-tracker.git"  # Your clone URL
 set :branch, "master"
 set :scm, "git"
-set :user, "goggin"  # The server"s user for deploys
+set :user, "puppet"  # The server"s user for deploys
 set :deploy_via, :remote_cache
 set :application, "word-tracker"
 set :deploy_to, "/home/goggin/projects/word-tracker"
@@ -55,6 +55,7 @@ namespace :deploy do
   task :symlink_config_files do
     symlinks = {
       "#{shared_path}/config/database.yml" => "#{release_path}/config/database.yml",
+      "#{shared_path}/config/local_env.yml" => "#{release_path}/config/local_env.yml",
     }
     run symlinks.map{|from, to| "ln -nfs #{from} #{to}"}.join(" && ")
   end
