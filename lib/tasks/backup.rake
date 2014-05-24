@@ -8,7 +8,7 @@ namespace :pg do
   task :backup => [:environment] do
     datestamp = Time.now.strftime("%Y-%m-%d_%H-%M-%S")
     backup_file = "#{Rails.root}/tmp/word_tracker_#{datestamp}_dump.sql.gz"
-    sh "pg_dump -h localhost -U pair my_words | gzip -c > #{backup_file}"
+    sh "pg_dump -h localhost -U #{db_user} #{db_name} | gzip -c > #{backup_file}"
     send_to_amazon backup_file
     File.delete backup_file
   end
@@ -22,8 +22,20 @@ namespace :pg do
     Rake::Task["db:drop"].invoke
     Rake::Task["db:create"].invoke
 
-    pull_from_amazon(args[:File_name])
+    pull_from_amazon(args[:file_name])
   end
+end
+
+def db_config
+  Rails.configuration.database_configuration[Rails.env]
+end
+
+def db_user
+  db_config["username"]
+end
+
+def db_name
+  db_config["database"]
 end
 
 def send_to_amazon(file_path)
@@ -48,7 +60,7 @@ def pull_from_amazon(file)
   sh "gzip -d #{tmp_file_path}"
   unzipped_temp_file_path = tmp_file_path[0..-4]
 
-  sh "psql -h localhost -p 5433 -U pair -d my_words -f #{unzipped_temp_file_path }"
+  sh "psql -h localhost -p 5433 -U #{db_user} -d #{db_name} -f #{unzipped_temp_file_path }"
 
   sh "rm #{unzipped_temp_file_path}"
 end
