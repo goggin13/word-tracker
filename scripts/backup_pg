@@ -1,1 +1,1 @@
-source /home/goggin/.aws && cd /home/goggin/projects/word-tracker/current && source /home/goggin/.rvm/environments/ruby-1.9.3-p545 && RAILS_ENV=development bundle exec rake pg:backup
+source /home/goggin/.aws && cd /home/goggin/projects/word-tracker/current && source /home/goggin/.rvm/environments/ruby-1.9.3-p545 && RAILS_ENV=production bundle exec rake pg:backup
