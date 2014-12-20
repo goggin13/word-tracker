@@ -1,47 +1,12 @@
-# PostgreSQL. Versions 8.2 and up are supported.
-#
-# Install the pg driver:
-#   gem install pg
-# On OS X with Homebrew:
-#   gem install pg -- --with-pg-config=/usr/local/bin/pg_config
-# On OS X with MacPorts:
-#   gem install pg -- --with-pg-config=/opt/local/lib/postgresql84/bin/pg_config
-# On Windows:
-#   gem install pg
-#       Choose the win32 build.
-#       Install PostgreSQL and put its /bin directory on your path.
-#
-# Configure Using Gemfile
-# gem 'pg'
-#
-development:
-  template: template0
+development: &default
   adapter: postgresql
   encoding: unicode
-  database: my-words_development
+  database: postgres
   pool: 5
-  host: localhost
-  username: pair
-  password: pair
-  port: 5433
+  username: postgres
+  password:
+  host: db
 
 test:
-  template: template0
-  adapter: postgresql
-  encoding: unicode
-  database: my-words_test
-  pool: 5
-  host: localhost
-  username: pair
-  password: pair
-  port: 5433
-
-production:
-  adapter: postgresql
-  encoding: unicode
-  database: my_words
-  pool: 5
-  username: pair
-  password: pair
-  port: 5433
-  host: localhost
+  <<: *default
+  database: word-tracker-test

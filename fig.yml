@@ -1,0 +1,17 @@
+ web:
+   build: .
+   command: bundle exec rails server
+   volumes:
+     - .:/word-tracker/app/
+   links:
+     - db
+   ports:
+     - "3000:3000"
+   environment:
+     POSTGRES_USERNAME: "postgres"
+     POSTGRES_PASSWORD: ""
+
+ db:
+   image: "postgres"
+   ports:
+     - "5432"
