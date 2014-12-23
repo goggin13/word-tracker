@@ -1,6 +1,6 @@
  web:
    build: .
-   command: bundle exec rails server
+   command: bundle exec rails server -p 3000
    volumes:
      - .:/word-tracker/app/
    links:
@@ -10,6 +10,7 @@
    environment:
      POSTGRES_USERNAME: "postgres"
      POSTGRES_PASSWORD: ""
+     RAILS_ENV: production
 
  db:
    image: "postgres"
