@@ -1,18 +1,27 @@
- web:
-   build: .
-   command: bundle exec rails server -p 3000
-   volumes:
-     - .:/word-tracker/app/
-   links:
-     - db
-   ports:
-     - "3000:3000"
-   environment:
-     POSTGRES_USERNAME: "postgres"
-     POSTGRES_PASSWORD: ""
-     RAILS_ENV: production
+web:
+  build: .
+  command: bundle exec rails server -p 4000
+  volumes:
+    - .:/word-tracker/app/
+  links:
+    - db
+  ports:
+    - "4000:4000"
+  environment:
+    POSTGRES_USERNAME: "postgres"
+    POSTGRES_PASSWORD: ""
+    RAILS_ENV: production
 
- db:
-   image: "postgres"
-   ports:
-     - "5432"
+db:
+  image: "postgres"
+  ports:
+    - "5432"
+
+nginx:
+  build: nginx
+  volumes:
+    - ./public:/assets/word-tracker/public
+  ports:
+    - "80:80"
+  links:
+    - web
