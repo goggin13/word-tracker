@@ -29,3 +29,7 @@ group :test do
   gem 'webmock', '1.17.1'
   gem 'dotenv-rails', '0.9.0'
 end
+
+group :production do
+  gem "newrelic_rpm", "~> 3.7"
+end
