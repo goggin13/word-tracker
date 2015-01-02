@@ -3,7 +3,7 @@ FROM ubuntu
 
 # Install required packages
 RUN apt-get update
-RUN apt-get install -y libpq-dev ruby2.0 ruby2.0-dev bundler curl
+RUN apt-get install -y libpq-dev ruby2.0 ruby2.0-dev bundler curl vim
 
 # Create directory from where the code will run
 RUN mkdir -p /word-tracker/app
