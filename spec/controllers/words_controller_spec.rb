@@ -23,7 +23,7 @@ describe WordsController do
   # This should return the minimal set of attributes required to create a valid
   # Word. As you add validations to Word, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { { "text" => "MyString" } }
+  let(:valid_attributes) { { "text" => "MyString", "user_id" => 1 } }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -87,10 +87,12 @@ describe WordsController do
   describe "POST create" do
     describe "authenticated" do
       before do
-        sign_in FactoryGirl.create(:user)
+        @user = FactoryGirl.create(:user)
+        sign_in @user
       end
+
       it "returns existing definitions if they are available" do
-        word = FactoryGirl.create(:word, text: "word1")
+        word = FactoryGirl.create(:word, text: "word1", :user => @user)
         FactoryGirl.create(:definition, text: "word1 means word1", word: word)
         FactoryGirl.create(:definition, text: "word1 also means word1", word: word)
 

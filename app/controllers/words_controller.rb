@@ -22,7 +22,7 @@ class WordsController < ApplicationController
 
   # POST /words
   def create
-    @word = Word.find_or_create_with_definitions(params[:word])
+    @word = Word.find_or_create_with_definitions(current_user, params[:word])
 
     if @word
       respond_to do |format|
