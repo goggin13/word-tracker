@@ -20,10 +20,6 @@ class WordsController < ApplicationController
     @word = Word.new
   end
 
-  # GET /words/1/edit
-  def edit
-  end
-
   # POST /words
   def create
     @word = Word.find_or_create_with_definitions(params[:word])
