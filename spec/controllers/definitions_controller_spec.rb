@@ -110,17 +110,34 @@ describe DefinitionsController do
       @word = FactoryGirl.create(:word)
     end
 
-    it "destroys the requested definition" do
-      definition = FactoryGirl.create(:definition, word: @word)
-      expect {
+    describe "authenticated" do
+      before do
+        sign_in FactoryGirl.create(:user)
+      end
+
+      it "destroys the requested definition" do
+        definition = FactoryGirl.create(:definition, word: @word)
+        expect {
+          delete :destroy, {:word_id => @word.id, :id => definition.to_param}, valid_session
+        }.to change(Definition, :count).by(-1)
+      end
+
+      it "redirects to the word page" do
+        definition = FactoryGirl.create(:definition, word: @word)
         delete :destroy, {:word_id => @word.id, :id => definition.to_param}, valid_session
-      }.to change(Definition, :count).by(-1)
+        response.should redirect_to(word_path(@word))
+      end
     end
 
-    it "redirects to the definitions list" do
-      definition = FactoryGirl.create(:definition, word: @word)
-      delete :destroy, {:word_id => @word.id, :id => definition.to_param}, valid_session
-      response.should redirect_to(word_definitions_url(@word))
+    describe "unauthenticated" do
+      it "redirects to the home page" do
+        definition = FactoryGirl.create(:definition, word: @word)
+        expect do
+          delete :destroy, {:word_id => @word.id, :id => definition.to_param}, valid_session
+        end.to change(Definition, :count).by(0)
+
+        response.should redirect_to(root_path)
+      end
     end
   end
 end

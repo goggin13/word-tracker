@@ -1,7 +1,7 @@
 class DefinitionsController < ApplicationController
   before_filter :_set_word
   before_action :set_definition, only: [:edit, :update, :destroy]
-  before_action :authenticate!, only: [:update]
+  before_action :authenticate!, only: [:update, :destroy]
 
   # GET /definitions/1/edit
   def edit
@@ -19,7 +19,7 @@ class DefinitionsController < ApplicationController
   # DELETE /definitions/1
   def destroy
     @definition.destroy
-    redirect_to word_definitions_url(@word), notice: 'Definition was successfully destroyed.'
+    redirect_to word_path(@word), notice: 'Definition was successfully destroyed.'
   end
 
   private

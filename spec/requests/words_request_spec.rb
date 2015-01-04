@@ -101,5 +101,18 @@ describe "Words", type: "words" do
       page.should have_link "Delete", href: word_definition_path(word, definition_1)
       page.should have_link "Delete", href: word_definition_path(word, definition_2)
     end
+
+    it "allows you to delete a definition" do
+      integration_login FactoryGirl.create(:user)
+
+      definition = FactoryGirl.create(:definition)
+      visit word_path(definition.word)
+
+      page.should have_link "Delete", href: word_definition_path(definition.word, definition)
+      click_link "Delete"
+
+      page.should have_content "Definition was successfully destroyed."
+      Definition.find_by_id(definition.id).should be_nil
+    end
   end
 end
