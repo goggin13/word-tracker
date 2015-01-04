@@ -32,75 +32,11 @@ describe DefinitionsController do
   # DefinitionsController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
-  describe "GET index" do
-    it "assigns all definitions as @definitions" do
-      definition = FactoryGirl.create(:definition)
-      get :index, { "word_id" => definition.word.id }, valid_session
-      assigns(:definitions).should eq([definition])
-    end
-  end
-
-  describe "GET show" do
-    it "assigns the requested definition as @definition" do
-      definition = FactoryGirl.create(:definition)
-      get :show, {:word_id => definition.word.id, :id => definition.to_param}, valid_session
-      assigns(:definition).should eq(definition)
-    end
-  end
-
-  describe "GET new" do
-    it "assigns a new definition as @definition" do
-      get :new, { "word_id" => FactoryGirl.create(:word).id }, valid_session
-      assigns(:definition).should be_a_new(Definition)
-    end
-  end
-
   describe "GET edit" do
     it "assigns the requested definition as @definition" do
       definition = FactoryGirl.create(:definition)
       get :edit, {:word_id => definition.word.id, :id => definition.to_param}, valid_session
       assigns(:definition).should eq(definition)
-    end
-  end
-
-  describe "POST create" do
-    before do
-      @word = FactoryGirl.create(:word)
-    end
-
-    describe "with valid params" do
-      it "creates a new Definition" do
-        expect {
-          post :create, {:word_id => @word.id, :definition => valid_attributes}, valid_session
-        }.to change(Definition, :count).by(1)
-      end
-
-      it "assigns a newly created definition as @definition" do
-        post :create, {:word_id => @word.id, :definition => valid_attributes}, valid_session
-        assigns(:definition).should be_a(Definition)
-        assigns(:definition).should be_persisted
-      end
-
-      it "redirects to the created definition" do
-        post :create, {:word_id => @word.id, :definition => valid_attributes}, valid_session
-        response.should redirect_to(word_definition_path(@word, Definition.last))
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns a newly created but unsaved definition as @definition" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        Definition.any_instance.stub(:save).and_return(false)
-        post :create, {:word_id => @word.id, :definition => { "text" => "invalid value" }}, valid_session
-        assigns(:definition).should be_a_new(Definition)
-      end
-
-      it "re-renders the 'new' template" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        Definition.any_instance.stub(:save).and_return(false)
-        post :create, {:word_id => @word.id, :definition => { "text" => "invalid value" }}, valid_session
-        response.should render_template("new")
-      end
     end
   end
 
@@ -110,6 +46,10 @@ describe DefinitionsController do
     end
 
     describe "with valid params" do
+      before do
+        sign_in FactoryGirl.create(:user)
+      end
+
       it "updates the requested definition" do
         definition = FactoryGirl.create(:definition, word: @word)
         # Assuming there are no other definitions in the database, this
@@ -126,14 +66,27 @@ describe DefinitionsController do
         assigns(:definition).should eq(definition)
       end
 
-      it "redirects to the definition" do
+      it "redirects to the word" do
         definition = FactoryGirl.create(:definition, word: @word)
         put :update, {:word_id => @word.id, :id => definition.to_param, :definition => valid_attributes}, valid_session
-        response.should redirect_to(word_definition_path(@word, definition))
+        response.should redirect_to(word_path(@word))
+      end
+    end
+
+    describe "unauthenticated" do
+      it "redirects to the home page" do
+        definition = FactoryGirl.create(:definition, word: @word)
+        put :update, {:word_id => @word.id, :id => definition.to_param, :definition => valid_attributes}, valid_session
+        response.should redirect_to(root_path)
+        flash[:warning].should == "You must be logged in."
       end
     end
 
     describe "with invalid params" do
+      before do
+        sign_in FactoryGirl.create(:user)
+      end
+
       it "assigns the definition as @definition" do
         definition = FactoryGirl.create(:definition, word: @word)
         # Trigger the behavior that occurs when invalid params are submitted

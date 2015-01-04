@@ -1,44 +1,16 @@
 class DefinitionsController < ApplicationController
   before_filter :_set_word
-  before_action :set_definition, only: [:show, :edit, :update, :destroy]
-
-  # GET /definitions
-  def index
-    @definitions = Definition.all
-    respond_to do |format|
-      format.html
-      format.json { render :json => @definitions }
-    end
-  end
-
-  # GET /definitions/1
-  def show
-  end
-
-  # GET /definitions/new
-  def new
-    @definition = Definition.new(word: @word)
-  end
+  before_action :set_definition, only: [:edit, :update, :destroy]
+  before_action :authenticate!, only: [:update]
 
   # GET /definitions/1/edit
   def edit
   end
 
-  # POST /definitions
-  def create
-    @definition = @word.definitions.build(definition_params)
-
-    if @definition.save
-      redirect_to word_definition_path(@word, @definition), notice: 'Definition was successfully created.'
-    else
-      render action: 'new'
-    end
-  end
-
   # PATCH/PUT /definitions/1
   def update
     if @definition.update(definition_params)
-      redirect_to word_definition_path(@word, @definition), notice: 'Definition was successfully updated.'
+      redirect_to word_path(@word), notice: 'Definition was successfully updated.'
     else
       render action: 'edit'
     end

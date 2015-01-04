@@ -1,4 +1,4 @@
-<%= form_for @definition, :html => { :class => 'form-horizontal' } do |f| %>
+<%= form_for [@word, @definition], :html => { :class => 'form-horizontal' } do |f| %>
 
   <div class="control-group">
     <%= f.label :text, :class => 'control-label' %>
@@ -17,6 +17,6 @@
   <div class="form-actions">
     <%= f.submit nil, :class => 'btn btn-primary' %>
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                definitions_path, :class => 'btn' %>
+                word_path(@word), :class => 'btn' %>
   </div>
 <% end %>
