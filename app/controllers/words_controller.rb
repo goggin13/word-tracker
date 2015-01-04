@@ -5,7 +5,7 @@ class WordsController < ApplicationController
   # GET /words
   def index
     if params[:user_id].present?
-      @words = Word.find_all_by_user_id(params[:user_id])
+      @words = Word.where(user_id: params[:user_id])
       @user = User.find(params[:user_id])
     elsif signed_in?
       @words = current_user.words
