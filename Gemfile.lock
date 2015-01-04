@@ -178,7 +178,7 @@ GEM
     uglifier (2.4.0)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
-    vcr (2.8.0)
+    vcr (2.9.3)
     warden (1.2.3)
       rack (>= 1.0)
     webmock (1.17.1)
@@ -217,7 +217,7 @@ DEPENDENCIES
   turbolinks (= 2.2.1)
   twitter-bootstrap-rails (= 2.2.8)
   uglifier (= 2.4.0)
-  vcr (= 2.8.0)
+  vcr (= 2.9.3)
   webmock (= 1.17.1)
   wordnik (= 4.12)
   zip
