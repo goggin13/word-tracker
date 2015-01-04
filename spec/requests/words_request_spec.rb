@@ -41,6 +41,20 @@ describe "Words", type: "words" do
 
       page.should have_content "word1"
     end
+
+    it "provides a link to delete the word" do
+      integration_login FactoryGirl.create(:user)
+      word = FactoryGirl.create(:word)
+
+      visit words_path(format: "html")
+
+      page.should have_link("Delete", href: word_path(word))
+      expect do
+        click_link "Delete"
+      end.to change(Word, :count).by(-1)
+
+      Word.find_by_id(word.id).should be_nil
+    end
   end
 
   describe "new words" do

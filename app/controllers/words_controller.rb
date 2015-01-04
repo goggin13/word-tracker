@@ -1,6 +1,6 @@
 class WordsController < ApplicationController
   before_action :set_word, only: [:show, :destroy]
-  before_action :authenticate!, only: [:create]
+  before_action :authenticate!, only: [:create, :destroy]
 
   # GET /words
   def index

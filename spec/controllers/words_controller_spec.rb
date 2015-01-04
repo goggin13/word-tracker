@@ -54,17 +54,33 @@ describe WordsController do
   end
 
   describe "DELETE destroy" do
-    it "destroys the requested word" do
-      word = Word.create! valid_attributes
-      expect {
+    describe "authenticated" do
+      before do
+        sign_in FactoryGirl.create(:user)
+      end
+
+      it "destroys the requested word" do
+        word = Word.create! valid_attributes
+        expect {
+          delete :destroy, {:id => word.to_param}, valid_session
+        }.to change(Word, :count).by(-1)
+      end
+
+      it "redirects to the words list" do
+        word = Word.create! valid_attributes
         delete :destroy, {:id => word.to_param}, valid_session
-      }.to change(Word, :count).by(-1)
+        response.should redirect_to(words_url)
+      end
     end
 
-    it "redirects to the words list" do
-      word = Word.create! valid_attributes
-      delete :destroy, {:id => word.to_param}, valid_session
-      response.should redirect_to(words_url)
+    describe "unauthenticated" do
+      it "redirects to the home page" do
+        word = Word.create! valid_attributes
+        expect do
+          delete :destroy, {:id => word.to_param}, valid_session
+          response.should redirect_to(root_path)
+        end.to change(Definition, :count).by(0)
+      end
     end
   end
 
