@@ -2,31 +2,15 @@ require 'spec_helper'
 
 describe "Words", type: "words" do
   describe "GET /words" do
-    it "returns a JSON array with all the existing words" do
-      FactoryGirl.create(
-        :definition,
-        text: "word1 means word1",
-        word: FactoryGirl.create(:word, text: "word1")
-      )
-      FactoryGirl.create(
-        :definition,
-        text: "word2 means word2",
-        word: FactoryGirl.create(:word, text: "word2")
-      )
-
-      get words_path(format: "json")
-
-      response.status.should == 200
-      JSON.parse(response.body).should == [
-        { "word1" => ["word1 means word1"] },
-        { "word2" => ["word2 means word2"] },
-      ]
+    before do
+      @user = FactoryGirl.create(:user)
     end
 
     it "renders an HTML page with all of the words" do
-      word = FactoryGirl.create(:word, text: "word1")
+      word = FactoryGirl.create(:word, text: "word1", user: @user)
       FactoryGirl.create(:definition, text: "word1 means word1", word: word)
 
+      integration_login(@user)
       visit words_path(format: "html")
 
       page.should have_content "word1"
@@ -35,16 +19,17 @@ describe "Words", type: "words" do
     end
 
     it "renders an HTML page with all of the words even if they don't have definitions" do
-      word = FactoryGirl.create(:word, text: "word1")
+      word = FactoryGirl.create(:word, text: "word1", user: @user)
 
+      integration_login(@user)
       visit words_path(format: "html")
 
       page.should have_content "word1"
     end
 
     it "provides a link to delete the word" do
-      integration_login FactoryGirl.create(:user)
-      word = FactoryGirl.create(:word)
+      integration_login @user
+      word = FactoryGirl.create(:word, user: @user)
 
       visit words_path(format: "html")
 

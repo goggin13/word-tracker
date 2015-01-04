@@ -12,5 +12,9 @@ FactoryGirl.define do
   factory :user do
     email
     password
+
+    trait :default do
+      email User::DEFAULT_USER_EMAIL
+    end
   end
 end

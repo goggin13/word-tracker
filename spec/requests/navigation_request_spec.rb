@@ -1,13 +1,19 @@
 require "spec_helper"
 
 describe "navigation" do
+  before do
+    @user = FactoryGirl.create(:user)
+  end
+
   it "has a link to the home page" do
+    integration_login @user
     visit "/"
     page.should have_link "MyWords", href: "/"
   end
 
   describe "sidebar" do
     it "contains links to the most recently posted 10 words" do
+      integration_login @user
       words = (0..9).map { FactoryGirl.create(:word) }
       visit "/"
 
@@ -35,6 +41,7 @@ describe "navigation" do
     end
 
     it "has a link to log the user out" do
+      FactoryGirl.create(:user, :default)
       visit "/"
       page.should have_link("Log out", href: destroy_user_session_path)
 

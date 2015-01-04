@@ -4,7 +4,17 @@ class WordsController < ApplicationController
 
   # GET /words
   def index
-    @words = Word.all
+    if params[:user_id].present?
+      @words = Word.find_all_by_user_id(params[:user_id])
+      @user = User.find(params[:user_id])
+    elsif signed_in?
+      @words = current_user.words
+      @user = current_user
+    else
+      @words = User.default_user.words
+      @user = User.default_user
+    end
+
     respond_to do |format|
       format.html
       format.json { render json: @words }

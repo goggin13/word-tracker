@@ -8,7 +8,6 @@ describe "Authetnication", type: "request" do
     fill_in "Email", with: user.email
     fill_in "Password", with: user.password
     click_button "Sign in"
-
   end
 
   describe "navigation links" do
@@ -26,6 +25,7 @@ describe "Authetnication", type: "request" do
     end
 
     it "displays a Login link when not logged in" do
+      FactoryGirl.create(:user, :default)
       visit "/"
       page.should have_link "Login", href: new_user_session_path
     end
