@@ -15,4 +15,16 @@ class ApplicationController < ActionController::Base
   def json_request?
     request.format.json?
   end
+
+  def authenticate!
+    unless user_signed_in?
+      respond_to do |format|
+        format.html {
+          flash[:warning] = "You must be logged in."
+          redirect_to root_path
+        }
+        format.json { render json: {}, status: 401 }
+      end
+    end
+  end
 end

@@ -67,4 +67,62 @@ describe WordsController do
       response.should redirect_to(words_url)
     end
   end
+
+  describe "POST create" do
+    describe "authenticated" do
+      before do
+        sign_in FactoryGirl.create(:user)
+      end
+      it "returns existing definitions if they are available" do
+        word = FactoryGirl.create(:word, text: "word1")
+        FactoryGirl.create(:definition, text: "word1 means word1", word: word)
+        FactoryGirl.create(:definition, text: "word1 also means word1", word: word)
+
+        post :create, word: "word1", format: :json
+
+        response.status.should == 200
+        JSON.parse(response.body).should == {
+          "word1" => ["word1 means word1", "word1 also means word1"]
+        }
+      end
+
+      it "looks up the defintion from wordnik" do
+        VCR.use_cassette "hysteria_api_response" do
+          post :create, :word => "hysteria", format: :json
+          response.status.should == 200
+          result = JSON.parse(response.body)
+
+          result.should == {
+            "hysteria" => [
+              "Behavior exhibiting excessive or uncontrollable emotion, such as fear or panic.",
+              "A mental disorder characterized by emotional excitability and sometimes by amnesia or a physical deficit, such as paralysis, or a sensory deficit, without an organic cause."
+            ]
+          }
+        end
+      end
+
+      it "returns 422 if the definition cannot be located" do
+        VCR.use_cassette "not_found_api_response" do
+          post :create, :word => "this-word-wont-be-found", format: :json
+          response.status.should == 422
+          result = JSON.parse(response.body)
+          result["errors"][0].should == "No definition found for 'this-word-wont-be-found'"
+        end
+      end
+    end
+
+    describe "unauthorized" do
+      it "returns 401 for a JSON request" do
+        post :create, word: "word1", format: :json
+        response.status.should == 401
+      end
+
+      it "redirects to the home page with a warning for a web request" do
+        post :create, word: "word1"
+
+        response.should redirect_to "/"
+        flash[:warning].should == "You must be logged in."
+      end
+    end
+  end
 end

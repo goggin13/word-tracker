@@ -43,53 +43,15 @@ describe "Words", type: "words" do
     end
   end
 
-  describe "POST /words.json" do
-    it "returns existing definitions if they are available" do
-      word = FactoryGirl.create(:word, text: "word1")
-      FactoryGirl.create(:definition, text: "word1 means word1", word: word)
-      FactoryGirl.create(:definition, text: "word1 also means word1", word: word)
-
-      post words_path, word: "word1", format: :json
-
-      response.status.should == 200
-      JSON.parse(response.body).should == {
-        "word1" => ["word1 means word1", "word1 also means word1"]
-      }
-    end
-
-    it "looks up the defintion from wordnik" do
-      VCR.use_cassette "hysteria_api_response" do
-        post words_path, :word => "hysteria", format: :json
-        response.status.should == 200
-        result = JSON.parse(response.body)
-
-        result.should == {
-          "hysteria" => [
-            "Behavior exhibiting excessive or uncontrollable emotion, such as fear or panic.",
-            "A mental disorder characterized by emotional excitability and sometimes by amnesia or a physical deficit, such as paralysis, or a sensory deficit, without an organic cause."
-          ]
-        }
-      end
-    end
-
-    it "returns 422 if the definition cannot be located" do
-      VCR.use_cassette "not_found_api_response" do
-        post words_path, :word => "this-word-wont-be-found", format: :json
-        response.status.should == 422
-        result = JSON.parse(response.body)
-        result["errors"][0].should == "No definition found for 'this-word-wont-be-found'"
-      end
-    end
-  end
-
   describe "new words" do
     it "creates a new word and definition from the wordnik api" do
+      integration_login FactoryGirl.create(:user)
       visit new_word_path
 
       VCR.use_cassette "hysteria_api_response" do
         fill_in "Word", with: "hysteria"
 
-        expect do
+      expect do
         expect do
             click_button "Create Word"
           end.to change(Word, :count).by(1)
@@ -106,6 +68,7 @@ describe "Words", type: "words" do
     end
 
     it "re-renders the form with an error if wordnik does not have the word" do
+      integration_login FactoryGirl.create(:user)
       visit new_word_path
 
       VCR.use_cassette "not_found_api_response" do
