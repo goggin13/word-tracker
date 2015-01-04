@@ -16,7 +16,7 @@ gem 'zip'
 group :development, :test do
   gem 'rspec-rails', '2.14.1'
   gem 'factory_girl_rails', '4.3.0'
-  gem 'vcr', '2.8.0'
+  gem 'vcr', '2.9.3'
   gem 'capybara', '2.2.1'
 end
 
