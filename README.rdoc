@@ -12,3 +12,28 @@ sudo docker start word_tracker_db
 sudo docker start word_tracker_web_1 
 
 sudo docker exec -i -t word_tracker_web_1 bash 
+
+
+# Production
+# Setup
+./scripts/docker/build_web.sh   
+./scripts/docker/build_nginx.sh 
+
+./scripts/docker/start_db.sh    
+./scripts/docker/start_web.sh
+./scripts/docker/start_nginx.sh
+
+sudo docker exec -it word_tracker_web_1 bundle exec rake db:setup
+sudo docker exec -it word_tracker_web_1 bundle exec rake assets:precompile
+
+
+# Deploy
+git pull
+sudo docker restart word_tracker_web_1
+sudo docker restart word_tracker_web_2
+sudo docker exec -it word_tracker_web_1 bundle exec rake db:migrate
+sudo docker exec -it word_tracker_web_1 bundle exec rake assets:precompile
+
+sudo docker stop word_tracker_nginx
+sudo docker rm word_tracker_nginx
+./scripts/docker/start_nginx.sh
