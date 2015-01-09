@@ -1,28 +1,14 @@
-== README
+# remove unused containers
+sudo docker rm $(sudo docker ps -a -q)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+sudo docker build -t=word_tracker_web:v1 .
+sudo docker build -t=word_tracker_nginx:v1 ./nginx 
 
-Things you may want to cover:
+sudo docker run -d --name word_tracker_db postgres:9.4
+sudo docker run -d --name word_tracker_web_1 --link word_tracker_db:db --publish 4000:4000 --volume /home/vagrant/goggin/word-tracker:/word-tracker/app word_tracker_web:v2
+sudo docker run -d --name word_tracker_nginx --link word_tracker_web_1:word_tracker_web_1 --publish 3001:80 --volume /home/vagrant/goggin/word-tracker/public:/assets/word-tracker/public word_tracker_nginx:v1
 
-* Ruby version
+sudo docker start word_tracker_db
+sudo docker start word_tracker_web_1 
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+sudo docker exec -i -t word_tracker_web_1 bash 

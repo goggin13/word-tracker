@@ -1,0 +1,11 @@
+sudo docker run -d --name word_tracker_web_1 \
+  --link word_tracker_db:db \
+  --publish 4000:4000 \
+  --volume /home/goggin/word-tracker:/word-tracker/app \
+  word_tracker_web:v2
+
+sudo docker run -d --name word_tracker_web_2 \
+  --link word_tracker_db:db \
+  --publish 4001:4001 \
+  --volume /home/goggin/word-tracker:/word-tracker/app \
+  word_tracker_web:v2

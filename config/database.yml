@@ -1,13 +1,15 @@
 development: &default
+  template: template0
   adapter: postgresql
   encoding: unicode
-  database: postgres
+  database: my-words_development
   pool: 5
   username: postgres
-  password:
-  host: db
+  password: ""
+  host: <%= ENV['DB_PORT_5432_TCP_ADDR'] %>
+  port: <%= ENV['DB_PORT_5432_TCP_PORT'] || "3306" %>
 
-production: 
+production:
   <<: *default
   database: word-tracker-prod
 
