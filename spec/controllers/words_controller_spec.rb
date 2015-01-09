@@ -60,6 +60,12 @@ describe WordsController do
       assigns(:words).should eq([another_users_word])
       assigns(:user).should eq(another_users_word.user)
     end
+
+    it "redirects to the sign up page if there is no default user and no signed in user" do
+      get :index
+      flash[:error].should == "No default user is setup."
+      response.should redirect_to new_user_registration_path
+    end
   end
 
   describe "GET show" do

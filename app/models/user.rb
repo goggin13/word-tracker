@@ -10,11 +10,15 @@ class User < ActiveRecord::Base
 
   def self.default_user
     User.find_by_email(DEFAULT_USER_EMAIL).tap do |default_user|
-      raise "Default user called and none defined" if default_user.nil?
+      if default_user.nil?
+        raise NoDefaultUserDefined.new("Default user called and none defined")
+      end
     end
   end
 
   def avatar_url(options={:height => 100, :width => 100})
     "http://robohash.org/#{id}.png?size=#{options[:height]}x#{options[:width]}"
   end
+
+  class NoDefaultUserDefined < Exception; end
 end

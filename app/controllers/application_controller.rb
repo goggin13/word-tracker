@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   skip_before_action :verify_authenticity_token, if: :json_request?
   before_filter :set_most_recent
+  rescue_from User::NoDefaultUserDefined, with: :no_default_user
 
   def heartbeat
     r = ActiveRecord::Base.connection.execute("select 1 as one")
@@ -26,5 +27,10 @@ class ApplicationController < ActionController::Base
         format.json { render json: {}, status: 401 }
       end
     end
+  end
+
+  def no_default_user
+    flash[:error] = "No default user is setup."
+    redirect_to new_user_registration_path
   end
 end
