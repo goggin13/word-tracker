@@ -23,4 +23,4 @@ RUN bundle install
 # Copy application code to container
 ADD . /word-tracker/app/
 
-CMD bundle exec rails server -p 4000 --pid $(hostname).pid
+CMD bundle exec rails server -p 4000 --pid ./tmp/pids/$(hostname).pid
