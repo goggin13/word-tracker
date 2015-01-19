@@ -106,6 +106,7 @@ GEM
     newrelic_rpm (3.7.3.204)
     nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
+    nunes (0.3.1)
     orm_adapter (0.5.0)
     pg (0.17.1)
     polyglot (0.3.3)
@@ -151,6 +152,7 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (~> 2.8)
+    statsd-ruby (0.3.0)
     therubyracer (0.12.1)
       libv8 (~> 3.16.14.0)
       ref
@@ -208,10 +210,12 @@ DEPENDENCIES
   factory_girl_rails (= 4.3.0)
   jquery-rails (= 3.1.0)
   newrelic_rpm (~> 3.7)
+  nunes
   pg (= 0.17.1)
   rails (= 4.0.2)
   rspec-rails (= 2.14.1)
   rvm-capistrano (= 1.5.1)
+  statsd-ruby
   therubyracer (= 0.12.1)
   thin (= 1.6.1)
   turbolinks (= 2.2.1)

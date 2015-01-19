@@ -12,6 +12,8 @@ gem 'uglifier', '2.4.0'
 gem 'devise', '3.2.3'
 gem 'aws-s3'
 gem 'zip'
+gem 'statsd-ruby'
+gem 'nunes'
 
 group :development, :test do
   gem 'rspec-rails', '2.14.1'
