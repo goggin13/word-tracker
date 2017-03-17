@@ -1,18 +1,17 @@
-development: &default
-  template: template0
-  adapter: postgresql
-  encoding: unicode
-  database: my-words_development
+development:
+  adapter: sqlite3
+  database: data/development.sqlite3
   pool: 5
-  username: postgres
-  password: ""
-  host: <%= ENV['DB_PORT_5432_TCP_ADDR'] %>
-  port: <%= ENV['DB_PORT_5432_TCP_PORT'] || "3306" %>
-
-production:
-  <<: *default
-  database: word-tracker-prod
+  timeout: 5000
 
 test:
-  <<: *default
-  database: word-tracker-test
+  adapter: sqlite3
+  database: data/test.sqlite3
+  pool: 5
+  timeout: 5000
+
+production:
+  adapter: sqlite3
+  database: data/production.sqlite3
+  pool: 5
+  timeout: 5000

@@ -1,39 +1,13 @@
-# remove unused containers
-sudo docker rm $(sudo docker ps -a -q)
+https://hub.docker.com/r/goggin13/word-tracker/
 
-sudo docker build -t=word_tracker_web:v1 .
-sudo docker build -t=word_tracker_nginx:v1 ./nginx 
+# prepare to deploy
+docker build .
+docker tag a4634a23a92c goggin13/word-tracker:latest
+docker push goggin13/word-tracker
 
-sudo docker run -d --name word_tracker_db postgres:9.4
-sudo docker run -d --name word_tracker_web_1 --link word_tracker_db:db --publish 4000:4000 --volume /home/vagrant/goggin/word-tracker:/word-tracker/app word_tracker_web:v2
-sudo docker run -d --name word_tracker_nginx --link word_tracker_web_1:word_tracker_web_1 --publish 3001:80 --volume /home/vagrant/goggin/word-tracker/public:/assets/word-tracker/public word_tracker_nginx:v1
-
-sudo docker start word_tracker_db
-sudo docker start word_tracker_web_1 
-
-sudo docker exec -i -t word_tracker_web_1 bash 
-
-
-# Production
-# Setup
-./scripts/docker/build_web.sh   
-./scripts/docker/build_nginx.sh 
-
-./scripts/docker/start_db.sh    
-./scripts/docker/start_web.sh
-./scripts/docker/start_nginx.sh
-
-sudo docker exec -it word_tracker_web_1 bundle exec rake db:setup
-sudo docker exec -it word_tracker_web_1 bundle exec rake assets:precompile
-
-
-# Deploy
-git pull
-sudo docker restart word_tracker_web_1
-sudo docker restart word_tracker_web_2
-sudo docker exec -it word_tracker_web_1 bundle exec rake db:migrate
-sudo docker exec -it word_tracker_web_1 bundle exec rake assets:precompile
-
-sudo docker stop word_tracker_nginx
-sudo docker rm word_tracker_nginx
-./scripts/docker/start_nginx.sh
+# run locally
+docker run -it \
+  --env-file ../infrastructure/word-tracker/files/word_tracker.env \
+  -p 4000:4000 \
+  --rm \
+  98e4e309c578

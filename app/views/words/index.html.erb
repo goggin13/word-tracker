@@ -1,7 +1,7 @@
 <div class="page-header">
   <h1>
     <%= image_tag @user.avatar_url %>
-    <%=t '.title', :default => "Words for user #{@user.id}" %>
+    <%=t '.title', :default => "Words for user #{@user.id} (#{@words.length})" %>
   </h1>
 
   <%= link_to t('.new', :default => t("helpers.links.new")),
