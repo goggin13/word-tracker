@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "definitions" do
+describe "definitions", :type => :request do
   describe "edit" do
     it "allows you to edit a definition" do
       integration_login FactoryGirl.create(:user)

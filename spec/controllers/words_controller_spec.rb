@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe WordsController do
+describe WordsController, :type => :controller do
 
   let(:valid_attributes) { { "text" => "MyString", "user_id" => 1 } }
 

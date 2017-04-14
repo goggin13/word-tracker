@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ApplicationController do
+describe ApplicationController, :type => :controller do
   describe "heartbeat" do
     it "returns 200" do
       get :heartbeat

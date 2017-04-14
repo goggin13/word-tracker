@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "navigation" do
+describe "navigation", type: "request" do
   before do
     @user = FactoryGirl.create(:user)
   end

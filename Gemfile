@@ -11,7 +11,7 @@ gem 'therubyracer', '0.12.1'
 gem 'devise', '3.2.3'
 
 group :development, :test do
-  gem 'rspec-rails', '2.14.1'
+  gem 'rspec-rails', '~> 3.5'
   gem 'factory_girl_rails', '4.3.0'
   gem 'vcr', '2.9.3'
   gem 'capybara', '2.2.1'

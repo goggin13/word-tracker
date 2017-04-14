@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Words", type: "words" do
+describe "Words", type: "request" do
   describe "GET /words" do
     before do
       @user = FactoryGirl.create(:user)
