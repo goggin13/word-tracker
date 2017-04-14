@@ -7,7 +7,7 @@ describe "Authetnication", type: "request" do
 
     fill_in "Email", with: user.email
     fill_in "Password", with: user.password
-    click_button "Sign in"
+    click_button "Log in"
   end
 
   describe "navigation links" do
@@ -17,7 +17,7 @@ describe "Authetnication", type: "request" do
 
       fill_in "Email", with: user.email
       fill_in "Password", with: user.password
-      click_button "Sign in"
+      click_button "Log in"
 
       page.should have_content "Signed in successfully."
       page.should have_link "person@hotmail.com", href: edit_user_registration_path(user)

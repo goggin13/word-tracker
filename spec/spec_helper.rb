@@ -107,7 +107,8 @@ RSpec.configure do |config|
   config.infer_base_class_for_anonymous_controllers = false
   config.order = "random"
   config.include Capybara::DSL
-  config.include Devise::TestHelpers, type: :controller
+  config.include Devise::Test::ControllerHelpers, type: :controller
+  config.expect_with(:rspec) { |c| c.syntax = [:should, :expect] }
 end
 
 VCR.configure do |c|
@@ -120,7 +121,7 @@ def integration_login(user)
 
   fill_in "Email", with: user.email
   fill_in "Password", with: user.password
-  click_button "Sign in"
+  click_button "Log in"
 
   page.should have_content "Signed in successfully."
 end

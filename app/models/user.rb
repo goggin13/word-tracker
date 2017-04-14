@@ -16,9 +16,5 @@ class User < ActiveRecord::Base
     end
   end
 
-  def avatar_url(options={:height => 100, :width => 100})
-    "http://robohash.org/#{id}.png?size=#{options[:height]}x#{options[:width]}"
-  end
-
   class NoDefaultUserDefined < Exception; end
 end

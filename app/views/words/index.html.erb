@@ -1,33 +1,25 @@
-<div class="page-header">
-  <h1>
-    <%= image_tag @user.avatar_url %>
-    <%=t '.title', :default => "Words for user #{@user.id} (#{@words.length})" %>
-  </h1>
+<h1>
+  <%=t '.title', :default => "Words for user #{@user.id} (#{@words.length})" %>
+</h1>
 
-  <%= link_to t('.new', :default => t("helpers.links.new")),
-              new_word_path,
-              :class => 'btn btn-primary' %>
+<%= link_to "New", new_word_path, :id => "new_button" %>
 
-</div>
+<ul id="list_wrapper">
+  <% @words.each do |word| %>
+    <li>
+      <div class="list_links">
+        (<%= link_to("destroy",
+                    word_path(word),
+                    :method => :delete,
+                    :data => { :confirm => "really?" })
 
-<table class="table table-striped">
-  <tbody>
-    <% @words.each do |word| %>
-      <tr>
-        <td><%= link_to word.text, word_path(word) %></td>
-        <td><%= word.first_definition %></td>
-        <td>
-          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                      word_path(word),
-                      :method => :delete,
-                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                      :class => 'btn btn-mini btn-danger' %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+          %>)
+      </div>
 
-<%= link_to t('.new', :default => t("helpers.links.new")),
-            new_word_path,
-            :class => 'btn btn-primary' %>
+    <div class="word_header">
+      <%= link_to word.text, word_path(word) %>
+    </div>
+    <%= word.first_definition %>
+    </li>
+  <% end %>
+</ul>

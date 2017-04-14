@@ -56,7 +56,7 @@ describe DefinitionsController, :type => :controller do
         # specifies that the Definition created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        Definition.any_instance.should_receive(:update).with({ "text" => "MyString" })
+        allow_any_instance_of(Definition).to receive(:update).with({ "text" => "MyString" })
         put :update, {:word_id => @word.id, :id => definition.to_param, :definition => { "text" => "MyString" }}, valid_session
       end
 
@@ -90,7 +90,7 @@ describe DefinitionsController, :type => :controller do
       it "assigns the definition as @definition" do
         definition = FactoryGirl.create(:definition, word: @word)
         # Trigger the behavior that occurs when invalid params are submitted
-        Definition.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(Definition).to receive(:save).and_return(false)
         put :update, {:word_id => @word.id, :id => definition.to_param, :definition => { "text" => "invalid value" }}, valid_session
         assigns(:definition).should eq(definition)
       end
@@ -98,7 +98,7 @@ describe DefinitionsController, :type => :controller do
       it "re-renders the 'edit' template" do
         definition = FactoryGirl.create(:definition, word: @word)
         # Trigger the behavior that occurs when invalid params are submitted
-        Definition.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(Definition).to receive(:save).and_return(false)
         put :update, {:word_id => @word.id, :id => definition.to_param, :definition => { "text" => "invalid value" }}, valid_session
         response.should render_template("edit")
       end
