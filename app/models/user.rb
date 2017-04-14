@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :words
+  has_many :words, -> { order 'created_at DESC' }
 
   DEFAULT_USER_EMAIL = "goggin13@gmail.com"
 
