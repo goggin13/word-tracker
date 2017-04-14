@@ -4,13 +4,8 @@
   <% @word.definitions.each do |definition| %>
     <li>
       <div class="list_links">
-        (<%= link_to "edit", edit_word_definition_path(@word, definition) %> |
-          <%= link_to("destroy",
-                    word_definition_path(@word, definition),
-                    :method => :delete,
-                    :data => { :confirm => "really?" })
-
-          %>)
+        <%= link_to "edit", edit_word_definition_path(@word, definition) %>
+        <%= button_to "delete", word_definition_path(@word, definition), :method => "delete" %>
       </div>
 
       <%= definition.text %>

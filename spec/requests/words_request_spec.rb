@@ -33,9 +33,9 @@ describe "Words", type: "request" do
 
       visit words_path(format: "html")
 
-      page.should have_link("Delete", href: word_path(word))
+      page.should have_button("delete")
       expect do
-        click_link "Delete"
+        click_button "delete"
       end.to change(Word, :count).by(-1)
 
       Word.find_by_id(word.id).should be_nil
@@ -57,7 +57,7 @@ describe "Words", type: "request" do
         end.to change(Definition, :count).by(2)
       end
 
-      page.should have_content "Word was successfully created."
+      page.should have_content "hysteria was successfully created."
 
       word = Word.find_by_text("hysteria")
       word.should_not be_nil
@@ -94,11 +94,8 @@ describe "Words", type: "request" do
       page.should have_content "my-definition-1"
       page.should have_content "my-definition-2"
 
-      page.should have_link "Edit", href: edit_word_definition_path(word, definition_1)
-      page.should have_link "Edit", href: edit_word_definition_path(word, definition_2)
-
-      page.should have_link "Delete", href: word_definition_path(word, definition_1)
-      page.should have_link "Delete", href: word_definition_path(word, definition_2)
+      page.should have_link "edit", href: edit_word_definition_path(word, definition_1)
+      page.should have_link "edit", href: edit_word_definition_path(word, definition_2)
     end
 
     it "allows you to delete a definition" do
@@ -107,8 +104,7 @@ describe "Words", type: "request" do
       definition = FactoryGirl.create(:definition)
       visit word_path(definition.word)
 
-      page.should have_link "Delete", href: word_definition_path(definition.word, definition)
-      click_link "Delete"
+      click_button "delete"
 
       page.should have_content "Definition was successfully destroyed."
       Definition.find_by_id(definition.id).should be_nil

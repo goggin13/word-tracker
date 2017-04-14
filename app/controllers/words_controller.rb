@@ -36,7 +36,7 @@ class WordsController < ApplicationController
 
     if @word
       respond_to do |format|
-        format.html { redirect_to @word, notice: 'Word was successfully created.' }
+        format.html { redirect_to @word, notice: "#{@word.text} was successfully created." }
         format.json { render json: @word }
       end
     else
@@ -51,7 +51,7 @@ class WordsController < ApplicationController
   # DELETE /words/1
   def destroy
     @word.destroy
-    redirect_to words_url, notice: 'Word was successfully destroyed.'
+    redirect_to words_url, notice: "#{@word.text} was successfully destroyed."
   end
 
   private

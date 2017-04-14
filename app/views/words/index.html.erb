@@ -8,12 +8,7 @@
   <% @words.each do |word| %>
     <li>
       <div class="list_links">
-        (<%= link_to("destroy",
-                    word_path(word),
-                    :method => :delete,
-                    :data => { :confirm => "really?" })
-
-          %>)
+        <%= button_to "delete", word, :method => "delete" %>
       </div>
 
     <div class="word_header">
