@@ -31,4 +31,4 @@ COPY . .
 
 # Define the script we want run once the container boots
 # Use the "exec" form of CMD so our script shuts down gracefully on SIGTERM (i.e. `docker stop`)
-CMD bundle exec rails server -p 4000 --pid $RAILS_ROOT/tmp/pids/$(hostname).pid
+CMD bundle exec rails server -p 4000 --pid $RAILS_ROOT/tmp/pids/$(hostname).pid -b 0.0.0.0
