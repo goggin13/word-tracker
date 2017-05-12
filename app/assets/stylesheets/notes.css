@@ -1,0 +1,22 @@
+.note {
+  border: thin solid black;
+  width: 800px;
+  margin: 10px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.note .front {
+  text-align: center;
+}
+
+.note .back {
+  text-align: left;
+  display: none;
+}
+
+#note_front, 
+#note_back {
+  height: 200px;
+  width: 600px;
+}

@@ -10,6 +10,8 @@
     <!-- Size should be 32 x 32 pixels -->
     <%= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
     <%= stylesheet_link_tag "application", :media => "all" %>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <%= javascript_include_tag "application" %>
   </head>
   <body>
@@ -22,6 +24,9 @@
           </li>
 
           <% if user_signed_in? %>
+            <li>
+              <%= link_to "Notes", notes_path %>
+            </li>
             <li>
               <%= link_to current_user.email, edit_user_registration_path(current_user) %>
             </li>

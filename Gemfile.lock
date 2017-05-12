@@ -73,6 +73,7 @@ GEM
     htmlentities (4.3.4)
     i18n (0.8.1)
     json (1.8.6)
+    kramdown (1.13.2)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.5)
@@ -176,6 +177,7 @@ DEPENDENCIES
   capybara (= 2.2.1)
   devise (= 4.2.1)
   factory_girl_rails (= 4.3.0)
+  kramdown (= 1.13.2)
   rails (= 4.2.5)
   rspec-rails (~> 3.5)
   sqlite3

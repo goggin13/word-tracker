@@ -1,5 +1,6 @@
 MyWords::Application.routes.draw do
 
+  resources :notes
   devise_for :users
   match '/heartbeat' => 'application#heartbeat', :via => :get
 

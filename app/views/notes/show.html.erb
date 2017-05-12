@@ -1,0 +1,13 @@
+<p id="notice"><%= notice %></p>
+
+<div class="note front">
+  <div class="front">
+    <%= @note.front_rendered %>
+  </div>
+  <div class="back">
+    <%= @note.back_rendered %>
+  </div>
+</div>
+
+<%= link_to 'Edit', edit_note_path(@note) %> |
+<%= link_to 'Back', notes_path %>

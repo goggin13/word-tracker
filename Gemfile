@@ -5,6 +5,7 @@ gem 'sqlite3'
 gem 'wordnik', '4.12'
 gem 'thin', '1.6.1'
 gem 'devise', '4.2.1'
+gem 'kramdown', '1.13.2'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.5'
