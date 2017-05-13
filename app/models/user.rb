@@ -17,7 +17,11 @@ class User < ActiveRecord::Base
   end
 
   def random_word
-    words.order("RANDOM()").first
+    Word
+      .where(:user => self)
+      .limit(1)
+      .order("RANDOM()")
+      .first
   end
 
   class NoDefaultUserDefined < Exception; end
