@@ -1,0 +1,15 @@
+<h1>Word of the Day</h1>
+
+<p>
+  <%= link_to @word.text, word_url(@word) %>
+</p>
+
+<h1>Flash cards</h1>
+<% @notes.each do |note| %>
+
+<p>
+  <%= note.front_rendered %>
+  <%= link_to "View", note_url(note) %>
+</p>
+
+<% end %>

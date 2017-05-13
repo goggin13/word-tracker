@@ -12,15 +12,14 @@ RSpec.describe "Notes", type: :request do
     it "renders the markdown on the note" do
       note = Note.create!({
         :user_id => 1,
-        :front => "# Hello World",
+        :front => "**Hello World**",
         :back => "**hello world**",
       })
 
-      get notes_path(note)
-      expect(response).to be_success
+      visit note_path(note)
 
-      expect(page).to have_selector("h1", :text => "Hello World")
-      expect(page).to have_selector("b", :text => "hello world")
+      expect(page).to have_selector("strong", :text => "Hello World")
+      expect(page).to have_selector("strong", :text => "hello world")
     end
   end
 end

@@ -5,6 +5,13 @@ class Note < ActiveRecord::Base
 
   belongs_to :user
 
+  def self.random_for(user, n)
+    Note
+      .where(:user => user)
+      .limit(n)
+      .order("RANDOM()")
+  end
+
   def back_rendered
     _render(back)
   end

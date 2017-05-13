@@ -1,13 +1,15 @@
 https://hub.docker.com/r/goggin13/word-tracker/
 
-# prepare to deploy
-docker build .
-docker tag a4634a23a92c goggin13/word-tracker:latest
-docker push goggin13/word-tracker
+# deploy
+```
+./docker_build_and_tag.sh
+./docker_push_tag.sh
+cd ../infrastructure
+./login_web01.sh
+cd word-tracker
+./deploy.sh
+```
 
 # run locally
-docker run -it \
-  --env-file ../infrastructure/word-tracker/files/word_tracker.env \
-  -p 4000:4000 \
-  --rm \
-  98e4e309c578
+`./docker_start_app.sh`
+`./docker_exec.sh # for rails testing`

@@ -12,5 +12,7 @@ MyWords::Application.routes.draw do
     resources :definitions, only: [:update, :create, :destroy, :edit]
   end
 
+  resources :emails, :only => [:new, :create]
+
   root 'words#index'
 end

@@ -11,7 +11,6 @@ RSpec.describe "notes/show", type: :view do
 
   it "renders attributes in <p>" do
     render
-    expect(rendered).to match(/2/)
     expect(rendered).to match(/MyText/)
     expect(rendered).to match(/MyText/)
   end

@@ -16,5 +16,9 @@ class User < ActiveRecord::Base
     end
   end
 
+  def random_word
+    words.order("RANDOM()").first
+  end
+
   class NoDefaultUserDefined < Exception; end
 end
