@@ -3,6 +3,8 @@ class Note < ActiveRecord::Base
   validates_presence_of :back
   validates_presence_of :user_id
 
+  has_and_belongs_to_many :tags
+
   belongs_to :user
 
   def self.random_for(user, n)

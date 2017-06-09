@@ -4,12 +4,14 @@
   <%= link_to @word.text, word_url(@word) %>
 </p>
 
-<h1>Flash cards</h1>
-<% @notes.each do |note| %>
+<% @tags.each do |tag| %>
 
-<p>
-  <%= note.front_rendered %>
-  <%= link_to "View", note_url(note) %>
-</p>
+  <h1><%= tag.name %></h1>
 
+  <% tag.random_notes(1).each do |note| %>
+    <p>
+      <%= note.front_rendered %>
+      <%= link_to "View", note_url(note) %>
+    </p>
+  <% end %>
 <% end %>

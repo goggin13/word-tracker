@@ -23,6 +23,7 @@ class NotesController < ApplicationController
   # POST /notes
   def create
     @note = Note.new(note_params.merge(:user_id => current_user.id))
+    @note.tags += tags_from_params
 
     if @note.save
       redirect_to @note, notice: 'Note was successfully created.'
@@ -34,6 +35,9 @@ class NotesController < ApplicationController
   # PATCH/PUT /notes/1
   def update
     if @note.update(note_params)
+      @note.tags.destroy_all
+      @note.tags += tags_from_params
+      @note.save!
       redirect_to @note, notice: 'Note was successfully updated.'
     else
       render :edit
@@ -47,6 +51,12 @@ class NotesController < ApplicationController
   end
 
   private
+    def tags_from_params
+      (params[:note][:tags] || "").split(" ").map do |name|
+        Tag.find_or_create_by(name: name)
+      end
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_note
       @note = Note.find(params[:id])
