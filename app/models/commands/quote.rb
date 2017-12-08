@@ -5,15 +5,15 @@ module Commands
     end
 
     def applicable?(text)
-      result = text =~ /^quote \w+.*\n\w+/i
+      result = text =~ /^quote \w+.*\n\s*\w+/i
 
       !result.nil? && result >= 0
     end
 
     def process(text)
       lines = text.sub(/quote /i, "").split("\n")
-      quote = lines[0]
-      author = lines[1]
+      quote = lines[0].strip
+      author = lines[1].strip
 
       note = Note.create(
         user: User.find_or_create_default_user,

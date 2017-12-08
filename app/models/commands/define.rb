@@ -5,7 +5,7 @@ module Commands
     end
 
     def applicable?(text)
-      result = text =~ /^define \w+$/i
+      result = text =~ /^define \w+\s*$/i
 
       !result.nil? && result >= 0
     end

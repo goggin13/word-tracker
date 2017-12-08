@@ -7,6 +7,11 @@ RSpec.describe Commands::Define, type: :model do
       expect(result).to be true
     end
 
+    it "is true for 'define word '" do
+      result = Commands::Define.new.applicable?("define word ")
+      expect(result).to be true
+    end
+
     it "is true for 'DEFINE word'" do
       result = Commands::Define.new.applicable?("DEFINE word")
       expect(result).to be true
@@ -47,6 +52,17 @@ RSpec.describe Commands::Define, type: :model do
       word.definitions[0].text.should == "Behavior exhibiting excessive or uncontrollable emotion, such as fear or panic."
 
       word.definitions[1].text.should == "A mental disorder characterized by emotional excitability and sometimes by amnesia or a physical deficit, such as paralysis, or a sensory deficit, without an organic cause."
+    end
+
+    it "strips trailing spaces" do
+      expect(TwilioClient).to receive(:text)
+
+      VCR.use_cassette "hysteria_api_response" do
+        Commands::Define.new.process("define hysteria ")
+      end
+
+      word = Word.find_by_text("hysteria")
+      word.should_not be_nil
     end
 
     it "responds with not found if no word is found" do
