@@ -8,6 +8,16 @@ class User < ActiveRecord::Base
 
   DEFAULT_USER_EMAIL = "goggin13@gmail.com"
 
+  def self.find_or_create_default_user
+    user = User.find_by_email(DEFAULT_USER_EMAIL)
+    return user if user.present?
+
+    User.create!(
+      :email => DEFAULT_USER_EMAIL,
+      :password => "change-me",
+    )
+  end
+
   def self.default_user
     User.find_by_email(DEFAULT_USER_EMAIL).tap do |default_user|
       if default_user.nil?

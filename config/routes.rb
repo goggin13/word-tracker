@@ -8,6 +8,8 @@ MyWords::Application.routes.draw do
 
   get 'users/:id/words' => 'words#index', as: :user_words
 
+  post 'texts' => 'texts#create'
+
   resources :words, except: [:update, :edit] do
     resources :definitions, only: [:update, :create, :destroy, :edit]
   end

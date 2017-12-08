@@ -7,6 +7,7 @@ gem 'thin', '1.6.1'
 gem 'devise', '4.2.1'
 gem 'kramdown', '1.13.2'
 gem 'aws-sdk', '2.9.25'
+gem 'twilio-ruby', '5.5.1'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.5'

@@ -50,8 +50,8 @@ describe "Words", type: "request" do
       VCR.use_cassette "hysteria_api_response" do
         fill_in "Word", with: "hysteria"
 
-      expect do
         expect do
+          expect do
             click_button "Create Word"
           end.to change(Word, :count).by(1)
         end.to change(Definition, :count).by(2)

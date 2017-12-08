@@ -3,7 +3,7 @@ https://hub.docker.com/r/goggin13/word-tracker/
 # deploy
 ```
 ./docker_build_and_tag.sh
-./docker_push_tag.sh
+./docker_push_tag.sh # use `docker login` if auth fails
 cd ../infrastructure
 ./login_web01.sh
 cd word-tracker
@@ -13,3 +13,5 @@ cd word-tracker
 # run locally
 `./docker_start_app.sh`
 `./docker_exec.sh # for rails testing`
+
+`bundle exec rspec`
