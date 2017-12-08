@@ -25,9 +25,9 @@ class EmailsController < ApplicationController
     Rails.logger.info "Sent email to #{@user.email}, result: #{result}"
 
     if result
-      render :text => "sent", :status => :created
+      render :text => "Sent at #{Time.now}\n", :status => :created
     else
-      render :text => "failed"
+      render :text => "Failed at #{Time.now}\n"
     end
   end
 

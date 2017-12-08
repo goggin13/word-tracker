@@ -8,7 +8,7 @@ class NotesController < ApplicationController
   end
 
   def quotes
-    @notes = Tag::QUOTE.notes
+    @notes = Tag::QUOTE.reload.notes
   end
 
   # GET /notes/1
