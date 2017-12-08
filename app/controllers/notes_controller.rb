@@ -7,6 +7,10 @@ class NotesController < ApplicationController
     @notes = Note.all
   end
 
+  def quotes
+    @notes = Tag::QUOTE.notes
+  end
+
   # GET /notes/1
   def show
   end

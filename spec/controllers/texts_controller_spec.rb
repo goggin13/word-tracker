@@ -25,6 +25,23 @@ RSpec.describe TextsController, type: :controller do
       end
     end
 
+    describe "quote" do
+      it "creates a note card" do
+        expected_response = "Saved quote from john milton"
+        expect(TwilioClient).to receive(:text).with(expected_response)
+
+        expect do
+          post :create, :Body => "quote hello world\njohn milton"
+        end.to change(Note, :count).by(1)
+
+        new_note = Note.last
+        expect(new_note.front).to eq("hello world")
+        expect(new_note.back).to eq("john milton")
+        expect(new_note.tags.size).to eq(1)
+        expect(new_note.tags[0]).to eq(Tag::QUOTE)
+      end
+    end
+
     describe "unknown" do
       it "texts the help" do
         expected_response = Commands::Handler.help

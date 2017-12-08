@@ -11,7 +11,11 @@
   <% tag.random_notes(1).each do |note| %>
     <p>
       <%= note.front_rendered %>
-      <%= link_to "View", note_url(note) %>
+      <% if tag.name == "quotes" %>
+        <%= "- #{note.back}" %>
+      <% else %>
+        <%= link_to "View", note_url(note) %>
+      <% end %>
     </p>
   <% end %>
 <% end %>

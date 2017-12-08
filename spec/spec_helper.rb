@@ -14,6 +14,10 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 
+  config.before(:each) do
+    Tag.find_or_create_by(name: "quote")
+  end
+
   config.shared_context_metadata_behavior = :apply_to_host_groups
   config.use_transactional_fixtures = true
 

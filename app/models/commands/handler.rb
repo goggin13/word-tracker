@@ -1,6 +1,7 @@
 module Commands
   ALL = [
     DEFINE = Define.new,
+    QUOTE = Quote.new,
   ]
 
   class Handler

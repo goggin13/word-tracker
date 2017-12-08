@@ -8,7 +8,7 @@
   <% @words.each do |word| %>
     <li>
       <div class="list_links">
-        <%= button_to "delete", word, :method => "delete" %>
+        <%= button_to "delete", word, :class => "delete", :method => "delete" %>
       </div>
 
     <div class="word_header">

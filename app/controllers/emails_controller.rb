@@ -35,8 +35,6 @@ class EmailsController < ApplicationController
     @user = User.find(params[:user_id])
     @notes = Note.random_for(@user, 2)
     @word = @user.random_word
-    @tags = ["military", "medical", "quotes"].map do |name|
-      Tag.find_or_create_by(name: name)
-    end
+    @tags = [Tag::QUOTE]
   end
 end

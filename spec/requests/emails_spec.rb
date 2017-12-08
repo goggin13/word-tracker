@@ -2,28 +2,22 @@ require "spec_helper"
 
 describe "emails", :type => :request do
   describe "GET new" do
-    it "displays notes from categories" do
+    it "displays notes from quotes" do
       user = FactoryGirl.create(:user)
       FactoryGirl.create(:word, :user => user)
-      notes = (0..1).map do |i|
-        FactoryGirl.create(
-          :note,
-          :user => user,
-          :front => "front - #{i}",
-          :back => "back - #{i}",
-        )
-      end
+      note = FactoryGirl.create(
+        :note,
+        :user => user,
+        :front => "front",
+        :back => "back",
+        :tags => [Tag::QUOTE]
+      )
 
-      notes[0].tags.create! :name => "medical"
-      notes[1].tags.create! :name => "military"
-
-      expect(Note).to receive(:random_for).and_return(notes)
+      expect(Note).to receive(:random_for).and_return([note])
       visit new_email_path(:user_id => user.id)
 
-      expect(page).to have_content("front - 0")
-      expect(page).to have_link("View", note_url(notes[0]))
-      expect(page).to have_content("front - 1")
-      expect(page).to have_link("View", note_url(notes[1]))
+      expect(page).to have_content("front")
+      expect(page).to have_content("back")
     end
 
     it "displays a word of the day" do

@@ -1,6 +1,8 @@
 MyWords::Application.routes.draw do
 
   resources :notes
+  get '/quotes' => 'notes#quotes', as: :notes_quotes
+
   devise_for :users
   match '/heartbeat' => 'application#heartbeat', :via => :get
 

@@ -1,8 +1,8 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Notes</h1>
+<h1>Quotes</h1>
 
-<%= link_to 'New Note', new_note_path %>
+<%= link_to 'New Quote', new_note_path %>
 
 <ul id="list_wrapper">
   <% @notes.each do |note| %>
@@ -10,9 +10,10 @@
       <div class="list_links">
         <td><%= link_to 'Show', note %></td>
         <td><%= link_to 'Edit', edit_note_path(note) %></td>
-        <td><%= button_to "delete", note, :class => "delete", :method => "delete" %></td>
+        <td><%= button_to "Delete", note, :class =>"delete", :method => "delete" %></td>
       </div>
       <%= note.front_rendered %>
+      <%= "- #{note.back}" %>
     </li>
   <% end %>
 </ul>
