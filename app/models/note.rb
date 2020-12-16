@@ -1,4 +1,4 @@
-class Note < ActiveRecord::Base
+class Note < ApplicationRecord
   validates_presence_of :front
   validates_presence_of :back
   validates_presence_of :user_id

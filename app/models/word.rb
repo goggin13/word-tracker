@@ -1,4 +1,4 @@
-class Word < ActiveRecord::Base
+class Word < ApplicationRecord
   has_many :definitions, dependent: :destroy
   belongs_to :user
   validates_presence_of :user_id
