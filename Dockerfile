@@ -40,4 +40,4 @@ RUN bundle install
 # Copy the Rails application into place
 COPY . .
 
-CMD bundle exec rails server -p 5000 --pid $RAILS_ROOT/tmp/pids/$(hostname).pid -b 0.0.0.0 --env $RAILS_ENV
+CMD bundle exec rails server -p 4000 --pid $RAILS_ROOT/tmp/pids/$(hostname).pid -b 0.0.0.0 --env $RAILS_ENV

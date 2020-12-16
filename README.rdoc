@@ -5,8 +5,8 @@ download https://github.com/goggin13/infrastructure in adjacent folder.
 
 # deploy
 ```
-./docker_build_and_tag.sh
-./docker_push_tag.sh # use `docker login` if auth fails
+./docker/build_and_tag.sh
+./docker/push_tag.sh
 cd ../infrastructure
 ./login_web01.sh
 cd word-tracker

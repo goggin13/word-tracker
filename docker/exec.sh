@@ -7,7 +7,7 @@ else
     -it \
     --env RAILS_ENV=test \
     --env-file ../infrastructure/modules/word-tracker/files/word_tracker.env \
-    -p 5000:5000 \
+    -p 4000:4000 \
     --name word-tracker-web \
     -v $LOCAL_VOLUME_PATH:/var/www/word-tracker \
     --rm \
