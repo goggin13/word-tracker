@@ -5,7 +5,7 @@ gem 'sqlite3', '~> 1.3.13'
 gem 'wordnik', '~> 4.12'
 gem 'thin', '~> 1.6.1'
 gem 'devise', '~> 4.4.1'
-gem 'kramdown', '~> 1.13.2'
+gem 'kramdown', '~> 2.3.0'
 gem 'aws-sdk', '~> 2.9.25'
 gem 'twilio-ruby', '~> 5.5.1'
 
