@@ -5,6 +5,7 @@ if docker ps | grep -o word-tracker-web ; then
 else
   docker run \
     -it \
+    --env RAILS_ENV=test \
     --env-file ../infrastructure/modules/word-tracker/files/word_tracker.env \
     -p 5000:5000 \
     --name word-tracker-web \
