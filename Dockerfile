@@ -6,13 +6,13 @@ RUN apt-get update -qq
 RUN apt-get install -y build-essential
 RUN apt-get install -y libpq-dev
 RUN apt-get install -y libsqlite3-dev
+RUN apt-get install -y curl
 
 # https://stackoverflow.com/questions/51033689/how-to-fix-error-on-postgres-install-ubuntu
 RUN mkdir -p /usr/share/man/man1
 RUN mkdir -p /usr/share/man/man7
 RUN apt-get install -y postgresql-client
 
-RUN apt-get install -y curl
 
 # Define where our application will live inside the image
 ENV RAILS_ROOT /var/www/word-tracker

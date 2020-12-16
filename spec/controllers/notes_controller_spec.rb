@@ -28,7 +28,7 @@ RSpec.describe NotesController, type: :controller do
   describe "GET #show" do
     it "returns a success response" do
       note = Note.create! valid_attributes.merge(:user_id => 1)
-      get :show, {:id => note.to_param}
+      get :show, params: {:id => note.to_param}
       expect(response).to be_success
     end
   end
@@ -53,7 +53,7 @@ RSpec.describe NotesController, type: :controller do
 
     it "returns a success response" do
       note = Note.create! valid_attributes.merge(:user_id => @user.id)
-      get :edit, {:id => note.to_param}
+      get :edit, params: {:id => note.to_param}
       expect(response).to be_success
     end
   end
@@ -67,14 +67,14 @@ RSpec.describe NotesController, type: :controller do
 
       it "creates a new Note" do
         expect {
-          post :create, {:note => valid_attributes}
+          post :create, params: {:note => valid_attributes}
         }.to change(Note, :count).by(1)
 
         expect(Note.last.user.id).to eq(@user.id)
       end
 
       it "redirects to the created note" do
-        post :create, {:note => valid_attributes}
+        post :create, params: {:note => valid_attributes}
         expect(response).to redirect_to(Note.last)
       end
     end
@@ -86,7 +86,7 @@ RSpec.describe NotesController, type: :controller do
       end
 
       it "returns a success response (i.e. to display the 'new' template)" do
-        post :create, {:note => invalid_attributes}
+        post :create, params: {:note => invalid_attributes}
         expect(response).to be_success
       end
     end
@@ -108,7 +108,7 @@ RSpec.describe NotesController, type: :controller do
       }
 
       it "updates the requested note" do
-        put :update, {:id => @note.to_param, :note => new_attributes}
+        put :update, params: {:id => @note.to_param, :note => new_attributes}
         @note.reload
         expect(@note.front).to eq("new_front")
         expect(@note.back).to eq("new_back")
@@ -116,7 +116,7 @@ RSpec.describe NotesController, type: :controller do
 
       it "redirects to the note" do
         @note = Note.create! valid_attributes.merge(:user_id => @user.id)
-        put :update, {:id => @note.to_param, :note => valid_attributes}
+        put :update, params: {:id => @note.to_param, :note => valid_attributes}
         expect(response).to redirect_to(@note)
       end
     end
@@ -129,7 +129,7 @@ RSpec.describe NotesController, type: :controller do
 
       it "returns a success response (i.e. to display the 'edit' template)" do
         note = Note.create! valid_attributes.merge(:user_id => @user.id)
-        put :update, {:id => note.to_param, :note => invalid_attributes}
+        put :update, params: {:id => note.to_param, :note => invalid_attributes}
         expect(response.code).to eq("302")
       end
     end
@@ -144,13 +144,13 @@ RSpec.describe NotesController, type: :controller do
     it "destroys the requested note" do
       note = Note.create! valid_attributes.merge(:user_id => @user.id)
       expect {
-        delete :destroy, {:id => note.to_param}
+        delete :destroy, params: {:id => note.to_param}
       }.to change(Note, :count).by(-1)
     end
 
     it "redirects to the notes list" do
       note = Note.create! valid_attributes.merge(:user_id => @user.id)
-      delete :destroy, {:id => note.to_param}
+      delete :destroy, params: {:id => note.to_param}
       expect(response).to redirect_to(notes_url)
     end
   end

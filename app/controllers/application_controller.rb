@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   def heartbeat
     r = ActiveRecord::Base.connection.execute("select 1 as one")
-    render text: "OK", status: (r[0]["one"].to_s == "1" ? 200 : 500)
+    render plain: "OK", status: (r[0]["one"].to_s == "1" ? 200 : 500)
   end
 
   def json_request?

@@ -1,7 +1,7 @@
 class EmailsController < ApplicationController
   skip_before_action :verify_authenticity_token
   layout false
-  before_filter :_setup
+  before_action :_setup
 
   def new
   end
@@ -25,9 +25,9 @@ class EmailsController < ApplicationController
     Rails.logger.info "Sent email to #{@user.email}, result: #{result}"
 
     if result
-      render :text => "Sent at #{Time.now}\n", :status => :created
+      render :plain => "Sent at #{Time.now}\n", :status => :created
     else
-      render :text => "Failed at #{Time.now}\n"
+      render :plain => "Failed at #{Time.now}\n"
     end
   end
 

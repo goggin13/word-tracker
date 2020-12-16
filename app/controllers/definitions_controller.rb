@@ -1,5 +1,5 @@
 class DefinitionsController < ApplicationController
-  before_filter :_set_word
+  before_action :_set_word
   before_action :set_definition, only: [:edit, :update, :destroy]
   before_action :authenticate!, only: [:update, :destroy]
 

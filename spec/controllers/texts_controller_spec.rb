@@ -13,7 +13,7 @@ RSpec.describe TextsController, type: :controller do
         expect(TwilioClient).to receive(:text).with(expected_response)
 
         VCR.use_cassette "hysteria_api_response" do
-          post :create, :Body => "Define hysteria"
+          post :create, params: {:Body => "Define hysteria"}
           expect(response).to be_success
         end
 
@@ -31,7 +31,7 @@ RSpec.describe TextsController, type: :controller do
         expect(TwilioClient).to receive(:text).with(expected_response)
 
         expect do
-          post :create, :Body => "quote hello world\njohn milton"
+          post :create, params: {:Body => "quote hello world\njohn milton"}
         end.to change(Note, :count).by(1)
 
         new_note = Note.last
@@ -46,7 +46,7 @@ RSpec.describe TextsController, type: :controller do
       it "texts the help" do
         expected_response = Commands::Handler.help
         expect(TwilioClient).to receive(:text).with(expected_response)
-        post :create, :Body => "unknown"
+        post :create, params: {:Body => "unknown"}
       end
     end
   end

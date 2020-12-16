@@ -19,7 +19,7 @@ describe WordsController, :type => :controller do
       )
 
       sign_in user
-      get :index, format: "json"
+      get :index, params: {format: "json"}
 
       response.status.should == 200
 
@@ -56,7 +56,7 @@ describe WordsController, :type => :controller do
       word = FactoryGirl.create(:word, user: user)
       another_users_word = FactoryGirl.create(:word)
 
-      get :index, :user_id => another_users_word.user_id
+      get :index, params: {:user_id => another_users_word.user_id}
       assigns(:words).should eq([another_users_word])
       assigns(:user).should eq(another_users_word.user)
     end
@@ -71,7 +71,7 @@ describe WordsController, :type => :controller do
   describe "GET show" do
     it "assigns the requested word as @word" do
       word = Word.create! valid_attributes
-      get :show, {:id => word.to_param}
+      get :show, params: {:id => word.to_param}
       assigns(:word).should eq(word)
     end
   end
@@ -92,13 +92,13 @@ describe WordsController, :type => :controller do
       it "destroys the requested word" do
         word = Word.create! valid_attributes
         expect {
-          delete :destroy, {:id => word.to_param}
+          delete :destroy, params: {:id => word.to_param}
         }.to change(Word, :count).by(-1)
       end
 
       it "redirects to the words list" do
         word = Word.create! valid_attributes
-        delete :destroy, {:id => word.to_param}
+        delete :destroy, params: {:id => word.to_param}
         response.should redirect_to(words_url)
       end
     end
@@ -107,7 +107,7 @@ describe WordsController, :type => :controller do
       it "redirects to the home page" do
         word = Word.create! valid_attributes
         expect do
-          delete :destroy, {:id => word.to_param}
+          delete :destroy, params: {:id => word.to_param}
           response.should redirect_to(root_path)
         end.to change(Definition, :count).by(0)
       end
@@ -126,7 +126,7 @@ describe WordsController, :type => :controller do
         FactoryGirl.create(:definition, text: "word1 means word1", word: word)
         FactoryGirl.create(:definition, text: "word1 also means word1", word: word)
 
-        post :create, word: "word1", format: :json
+        post :create, params: {word: "word1", format: :json}
 
         response.status.should == 200
         JSON.parse(response.body).should == {
@@ -136,7 +136,7 @@ describe WordsController, :type => :controller do
 
       it "looks up the defintion from wordnik" do
         VCR.use_cassette "hysteria_api_response" do
-          post :create, :word => "hysteria", format: :json
+          post :create, params: {:word => "hysteria", format: :json}
           response.status.should == 200
           result = JSON.parse(response.body)
 
@@ -151,7 +151,7 @@ describe WordsController, :type => :controller do
 
       it "returns 422 if the definition cannot be located" do
         VCR.use_cassette "not_found_api_response" do
-          post :create, :word => "this-word-wont-be-found", format: :json
+          post :create, params: {:word => "this-word-wont-be-found", format: :json}
           response.status.should == 422
           result = JSON.parse(response.body)
           result["errors"][0].should == "No definition found for 'this-word-wont-be-found'"
@@ -161,12 +161,12 @@ describe WordsController, :type => :controller do
 
     describe "unauthorized" do
       it "returns 401 for a JSON request" do
-        post :create, word: "word1", format: :json
+        post :create, params: {word: "word1", format: :json}
         response.status.should == 401
       end
 
       it "redirects to the home page with a warning for a web request" do
-        post :create, word: "word1"
+        post :create, params: {word: "word1"}
 
         response.should redirect_to "/"
         flash[:warning].should == "You must be logged in."

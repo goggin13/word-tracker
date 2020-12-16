@@ -5,7 +5,7 @@ describe EmailsController, :type => :controller do
     it "sends an email to the user" do
       user = FactoryGirl.create(:user)
       result = VCR.use_cassette("send_grid_api_response") do
-        post :create, :user_id => user.id
+        post :create, params: {:user_id => user.id}
         expect(response).to be_created
       end
     end

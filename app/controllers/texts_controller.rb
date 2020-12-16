@@ -3,6 +3,6 @@ class TextsController < ApplicationController
 
   def create
     Commands::Handler.handle(params[:Body])
-    render :text => "OK"
+    render :plain => "OK"
   end
 end
