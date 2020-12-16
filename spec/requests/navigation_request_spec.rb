@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe "navigation", type: "request" do
   before do
-    @user = FactoryGirl.create(:user)
+    @user = FactoryBot.create(:user)
   end
 
   it "has a link to the home page" do
@@ -13,7 +13,7 @@ describe "navigation", type: "request" do
 
   describe "logged in" do
     before do
-      @user = FactoryGirl.create(
+      @user = FactoryBot.create(
         :user,
         :email => "test@example.com",
         :password => "test-password"
@@ -28,7 +28,7 @@ describe "navigation", type: "request" do
     end
 
     it "has a link to log the user out" do
-      FactoryGirl.create(:user, :default)
+      FactoryBot.create(:user, :default)
       visit "/"
       page.should have_link("Log out", href: destroy_user_session_path)
 

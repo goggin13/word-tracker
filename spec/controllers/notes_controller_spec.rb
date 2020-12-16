@@ -35,7 +35,7 @@ RSpec.describe NotesController, type: :controller do
 
   describe "GET #new" do
     before do
-      @user = FactoryGirl.create(:user)
+      @user = FactoryBot.create(:user)
       sign_in @user
     end
 
@@ -47,7 +47,7 @@ RSpec.describe NotesController, type: :controller do
 
   describe "GET #edit" do
     before do
-      @user = FactoryGirl.create(:user)
+      @user = FactoryBot.create(:user)
       sign_in @user
     end
 
@@ -61,7 +61,7 @@ RSpec.describe NotesController, type: :controller do
   describe "POST #create" do
     context "with valid params" do
       before do
-        @user = FactoryGirl.create(:user)
+        @user = FactoryBot.create(:user)
         sign_in @user
       end
 
@@ -81,7 +81,7 @@ RSpec.describe NotesController, type: :controller do
 
     context "with invalid params" do
       before do
-        @user = FactoryGirl.create(:user)
+        @user = FactoryBot.create(:user)
         sign_in @user
       end
 
@@ -95,7 +95,7 @@ RSpec.describe NotesController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       before do
-        @user = FactoryGirl.create(:user)
+        @user = FactoryBot.create(:user)
         sign_in @user
         @note = Note.create! valid_attributes.merge(:user => @user)
       end
@@ -123,7 +123,7 @@ RSpec.describe NotesController, type: :controller do
 
     context "with invalid params" do
       before do
-        @user = FactoryGirl.create(:user)
+        @user = FactoryBot.create(:user)
         sign_in @user
       end
 
@@ -137,7 +137,7 @@ RSpec.describe NotesController, type: :controller do
 
   describe "DELETE #destroy" do
     before do
-      @user = FactoryGirl.create(:user)
+      @user = FactoryBot.create(:user)
       sign_in @user
     end
 

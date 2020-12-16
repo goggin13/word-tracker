@@ -3,9 +3,9 @@ require "spec_helper"
 describe "emails", :type => :request do
   describe "GET new" do
     it "displays notes from quotes" do
-      user = FactoryGirl.create(:user)
-      FactoryGirl.create(:word, :user => user)
-      note = FactoryGirl.create(
+      user = FactoryBot.create(:user)
+      FactoryBot.create(:word, :user => user)
+      note = FactoryBot.create(
         :note,
         :user => user,
         :front => "front",
@@ -21,8 +21,8 @@ describe "emails", :type => :request do
     end
 
     it "displays a word of the day" do
-      user = FactoryGirl.create(:user)
-      word = FactoryGirl.create(:word, :user => user, :text => "hello world")
+      user = FactoryBot.create(:user)
+      word = FactoryBot.create(:word, :user => user, :text => "hello world")
 
       visit new_email_path(:user_id => user.id)
 

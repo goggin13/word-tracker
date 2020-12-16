@@ -6,16 +6,16 @@ describe WordsController, :type => :controller do
 
   describe "GET index" do
     it "returns a JSON array with all the existing words for the current user" do
-      user = FactoryGirl.create(:user)
-      FactoryGirl.create(
+      user = FactoryBot.create(:user)
+      FactoryBot.create(
         :definition,
         text: "word1 means word1",
-        word: FactoryGirl.create(:word, text: "word1", user: user),
+        word: FactoryBot.create(:word, text: "word1", user: user),
       )
-      FactoryGirl.create(
+      FactoryBot.create(
         :definition,
         text: "word2 means word2",
-        word: FactoryGirl.create(:word, text: "word2", user: user),
+        word: FactoryBot.create(:word, text: "word2", user: user),
       )
 
       sign_in user
@@ -30,19 +30,19 @@ describe WordsController, :type => :controller do
     end
 
     it "defaults to words from goggin13@gmail" do
-      user = FactoryGirl.create(:user, email: "goggin13@gmail.com")
-      word = FactoryGirl.create(:word, user: user)
+      user = FactoryBot.create(:user, email: "goggin13@gmail.com")
+      word = FactoryBot.create(:word, user: user)
       get :index, {}
       assigns(:words).should eq([word])
       assigns(:user).should eq(user)
     end
 
     it "only displays words from the current user" do
-      user = FactoryGirl.create(:user)
+      user = FactoryBot.create(:user)
       sign_in user
 
-      word = FactoryGirl.create(:word, user: user)
-      another_users_word = FactoryGirl.create(:word)
+      word = FactoryBot.create(:word, user: user)
+      another_users_word = FactoryBot.create(:word)
 
       get :index, {}
       assigns(:words).should eq([word])
@@ -50,11 +50,11 @@ describe WordsController, :type => :controller do
     end
 
     it "displays the words for a requested user_id" do
-      user = FactoryGirl.create(:user)
+      user = FactoryBot.create(:user)
       sign_in user
 
-      word = FactoryGirl.create(:word, user: user)
-      another_users_word = FactoryGirl.create(:word)
+      word = FactoryBot.create(:word, user: user)
+      another_users_word = FactoryBot.create(:word)
 
       get :index, params: {:user_id => another_users_word.user_id}
       assigns(:words).should eq([another_users_word])
@@ -86,7 +86,7 @@ describe WordsController, :type => :controller do
   describe "DELETE destroy" do
     describe "authenticated" do
       before do
-        sign_in FactoryGirl.create(:user)
+        sign_in FactoryBot.create(:user)
       end
 
       it "destroys the requested word" do
@@ -117,14 +117,14 @@ describe WordsController, :type => :controller do
   describe "POST create" do
     describe "authenticated" do
       before do
-        @user = FactoryGirl.create(:user)
+        @user = FactoryBot.create(:user)
         sign_in @user
       end
 
       it "returns existing definitions if they are available" do
-        word = FactoryGirl.create(:word, text: "word1", :user => @user)
-        FactoryGirl.create(:definition, text: "word1 means word1", word: word)
-        FactoryGirl.create(:definition, text: "word1 also means word1", word: word)
+        word = FactoryBot.create(:word, text: "word1", :user => @user)
+        FactoryBot.create(:definition, text: "word1 means word1", word: word)
+        FactoryBot.create(:definition, text: "word1 also means word1", word: word)
 
         post :create, params: {word: "word1", format: :json}
 

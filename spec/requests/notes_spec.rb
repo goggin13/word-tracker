@@ -18,7 +18,7 @@ RSpec.describe "Notes", type: :request do
 
   describe "POST /notes" do
     before do
-      @user = FactoryGirl.create(:user)
+      @user = FactoryBot.create(:user)
       integration_login @user
 
       visit new_note_path
@@ -56,7 +56,7 @@ RSpec.describe "Notes", type: :request do
 
   describe "updating a note" do
     it "updates tags" do
-      integration_login FactoryGirl.create(:user)
+      integration_login FactoryBot.create(:user)
       visit new_note_path
 
       fill_in "Front", with: "front"

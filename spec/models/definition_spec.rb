@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Definition do
   before do
-    @word = FactoryGirl.create(:word)
+    @word = FactoryBot.create(:word)
   end
 
   it "creates a new definition" do

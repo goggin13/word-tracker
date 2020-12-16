@@ -3,8 +3,8 @@ require "spec_helper"
 describe "definitions", :type => :request do
   describe "edit" do
     it "allows you to edit a definition" do
-      integration_login FactoryGirl.create(:user)
-      definition = FactoryGirl.create(:definition, text: "old definition")
+      integration_login FactoryBot.create(:user)
+      definition = FactoryBot.create(:definition, text: "old definition")
 
       visit edit_word_definition_path(definition.word, definition)
 

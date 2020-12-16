@@ -11,7 +11,7 @@ gem 'twilio-ruby', '~> 5.5.1'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.9'
-  gem 'factory_girl_rails', '~> 4.3.0'
+  gem 'factory_bot_rails', '~> 5.2.0'
   gem 'vcr', '~> 2.9.3'
   gem 'capybara', '~> 2.6.1'
 end

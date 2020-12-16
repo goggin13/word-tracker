@@ -3,12 +3,12 @@ require 'spec_helper'
 describe "Words", type: "request" do
   describe "GET /words" do
     before do
-      @user = FactoryGirl.create(:user)
+      @user = FactoryBot.create(:user)
     end
 
     it "renders an HTML page with all of the words" do
-      word = FactoryGirl.create(:word, text: "word1", user: @user)
-      FactoryGirl.create(:definition, text: "word1 means word1", word: word)
+      word = FactoryBot.create(:word, text: "word1", user: @user)
+      FactoryBot.create(:definition, text: "word1 means word1", word: word)
 
       integration_login(@user)
       visit words_path(format: "html")
@@ -19,7 +19,7 @@ describe "Words", type: "request" do
     end
 
     it "renders an HTML page with all of the words even if they don't have definitions" do
-      word = FactoryGirl.create(:word, text: "word1", user: @user)
+      word = FactoryBot.create(:word, text: "word1", user: @user)
 
       integration_login(@user)
       visit words_path(format: "html")
@@ -29,7 +29,7 @@ describe "Words", type: "request" do
 
     it "provides a link to delete the word" do
       integration_login @user
-      word = FactoryGirl.create(:word, user: @user)
+      word = FactoryBot.create(:word, user: @user)
 
       visit words_path(format: "html")
 
@@ -44,7 +44,7 @@ describe "Words", type: "request" do
 
   describe "new words" do
     it "creates a new word and definition from the wordnik api" do
-      integration_login FactoryGirl.create(:user)
+      integration_login FactoryBot.create(:user)
       visit new_word_path
 
       VCR.use_cassette "hysteria_api_response" do
@@ -67,7 +67,7 @@ describe "Words", type: "request" do
     end
 
     it "re-renders the form with an error if wordnik does not have the word" do
-      integration_login FactoryGirl.create(:user)
+      integration_login FactoryBot.create(:user)
       visit new_word_path
 
       VCR.use_cassette "not_found_api_response" do
@@ -84,9 +84,9 @@ describe "Words", type: "request" do
 
   describe "show" do
     it "lists the word and its definitions" do
-      word = FactoryGirl.create(:word, text: "my-word")
-      definition_1 = FactoryGirl.create(:definition, word: word, text: "my-definition-1")
-      definition_2 = FactoryGirl.create(:definition, word: word, text: "my-definition-2")
+      word = FactoryBot.create(:word, text: "my-word")
+      definition_1 = FactoryBot.create(:definition, word: word, text: "my-definition-1")
+      definition_2 = FactoryBot.create(:definition, word: word, text: "my-definition-2")
 
       visit word_path(word)
 
@@ -99,9 +99,9 @@ describe "Words", type: "request" do
     end
 
     it "allows you to delete a definition" do
-      integration_login FactoryGirl.create(:user)
+      integration_login FactoryBot.create(:user)
 
-      definition = FactoryGirl.create(:definition)
+      definition = FactoryBot.create(:definition)
       visit word_path(definition.word)
 
       click_button "delete"

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Word do
   describe "definitions" do
     it "is destroyed with the word" do
-      definition = FactoryGirl.create(:definition, text: "my-definition-1")
+      definition = FactoryBot.create(:definition, text: "my-definition-1")
       definition.word.destroy
 
       Definition.find_by_id(definition.id).should be_nil
@@ -12,10 +12,10 @@ describe Word do
 
   describe "self.find_or_create_with_definitions" do
     it "returns existing definitions if they exist" do
-      word = FactoryGirl.create(:word, text: "my-word")
+      word = FactoryBot.create(:word, text: "my-word")
       user = word.user
-      FactoryGirl.create(:definition, word: word, text: "my-definition-1")
-      FactoryGirl.create(:definition, word: word, text: "my-definition-2")
+      FactoryBot.create(:definition, word: word, text: "my-definition-1")
+      FactoryBot.create(:definition, word: word, text: "my-definition-2")
 
       returned_word = Word.find_or_create_with_definitions(user, "my-word")
 
@@ -25,9 +25,9 @@ describe Word do
     end
 
     it "doesn't returns existing definitions if they exist for a different user" do
-      existing_word = FactoryGirl.create(:word, text: "hysteria")
-      user = FactoryGirl.create(:user)
-      existing_definition = FactoryGirl.create(:definition, word: existing_word)
+      existing_word = FactoryBot.create(:word, text: "hysteria")
+      user = FactoryBot.create(:user)
+      existing_definition = FactoryBot.create(:definition, word: existing_word)
 
       returned_word = VCR.use_cassette "hysteria_api_response" do
         Word.find_or_create_with_definitions(user, "hysteria")
@@ -38,7 +38,7 @@ describe Word do
     end
 
     it "assigns the new word to the given user" do
-      user = FactoryGirl.create(:user)
+      user = FactoryBot.create(:user)
       VCR.use_cassette "hysteria_api_response" do
         word = Word.find_or_create_with_definitions(user, "hysteria")
         word.user.id.should == user.id
@@ -46,7 +46,7 @@ describe Word do
     end
 
     it "creates a definition for each result wordnik returns" do
-      user = FactoryGirl.create(:user)
+      user = FactoryBot.create(:user)
       VCR.use_cassette "hysteria_api_response" do
         expect do
           expect do
@@ -61,7 +61,7 @@ describe Word do
     end
 
     it "does not requery wordnik nor create new entries if the word exists" do
-      user = FactoryGirl.create(:user)
+      user = FactoryBot.create(:user)
       VCR.use_cassette "hysteria_api_response" do
         Word.find_or_create_with_definitions(user, "hysteria")
       end
@@ -72,7 +72,7 @@ describe Word do
     end
 
     it "returns nil if there is no definition found in wordnik" do
-      user = FactoryGirl.create(:user)
+      user = FactoryBot.create(:user)
       VCR.use_cassette "not_found_api_response" do
         Word.find_or_create_with_definitions(user, "this-word-wont-be-found").should be_nil
       end
@@ -81,9 +81,9 @@ describe Word do
 
   describe "to_json" do
     it "includes definitions nested" do
-      word = FactoryGirl.create(:word, text: "my-word")
-      FactoryGirl.create(:definition, word: word, text: "my-definition-1")
-      FactoryGirl.create(:definition, word: word, text: "my-definition-2")
+      word = FactoryBot.create(:word, text: "my-word")
+      FactoryBot.create(:definition, word: word, text: "my-definition-1")
+      FactoryBot.create(:definition, word: word, text: "my-definition-2")
 
       word.as_json.should == {
         "my-word" => ["my-definition-1", "my-definition-2"]

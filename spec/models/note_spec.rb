@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Note, type: :model do
   describe "random_for" do
     it "returns notes for a user" do
-      user = FactoryGirl.create(:user)
+      user = FactoryBot.create(:user)
       notes = (0..1).map do
         Note.create!(
           :user => user,
@@ -18,8 +18,8 @@ RSpec.describe Note, type: :model do
     end
 
     it "only includes notes from the user" do
-      user = FactoryGirl.create(:user)
-      FactoryGirl.create(:note)
+      user = FactoryBot.create(:user)
+      FactoryBot.create(:note)
 
       random = Note.random_for(user, 1)
       expect(random.length).to eq(0)

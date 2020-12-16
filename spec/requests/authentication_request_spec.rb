@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "Authetnication", type: "request" do
   it "displays a welcome message after logging in" do
-    user = FactoryGirl.create(:user)
+    user = FactoryBot.create(:user)
     visit new_user_session_path
 
     fill_in "Email", with: user.email
@@ -12,7 +12,7 @@ describe "Authetnication", type: "request" do
 
   describe "navigation links" do
     it "displays logout 'username' and an account link when logged in" do
-      user = FactoryGirl.create(:user, email: "person@hotmail.com")
+      user = FactoryBot.create(:user, email: "person@hotmail.com")
       visit new_user_session_path
 
       fill_in "Email", with: user.email
@@ -25,7 +25,7 @@ describe "Authetnication", type: "request" do
     end
 
     it "displays a Login link when not logged in" do
-      FactoryGirl.create(:user, :default)
+      FactoryBot.create(:user, :default)
       visit "/"
       page.should have_link "Login", href: new_user_session_path
     end
