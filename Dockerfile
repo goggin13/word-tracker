@@ -1,8 +1,18 @@
 # Base our image on an official, minimal image of our preferred Ruby
-FROM ruby:2.2.3-slim
+FROM ruby:2.3.8-slim
 
 # Install essential Linux packages
-RUN apt-get update -qq && apt-get install -y build-essential libpq-dev postgresql-client libsqlite3-dev
+RUN apt-get update -qq
+RUN apt-get install -y build-essential
+RUN apt-get install -y libpq-dev
+RUN apt-get install -y libsqlite3-dev
+
+# https://stackoverflow.com/questions/51033689/how-to-fix-error-on-postgres-install-ubuntu
+RUN mkdir -p /usr/share/man/man1
+RUN mkdir -p /usr/share/man/man7
+RUN apt-get install -y postgresql-client
+
+RUN apt-get install -y curl
 
 # Define where our application will live inside the image
 ENV RAILS_ROOT /var/www/word-tracker
@@ -22,7 +32,7 @@ COPY Gemfile Gemfile
 COPY Gemfile.lock Gemfile.lock
 
 # Prevent bundler warnings; ensure that the bundler version executed is >= that which created Gemfile.lock
-RUN gem install bundler
+RUN gem install bundler -v 1.15.0
 
 # Finish establishing our Ruby enviornment
 RUN bundle install
@@ -30,4 +40,4 @@ RUN bundle install
 # Copy the Rails application into place
 COPY . .
 
-CMD bundle exec rails server -p 4000 --pid $RAILS_ROOT/tmp/pids/$(hostname).pid -b 0.0.0.0 --env $RAILS_ENV
+CMD bundle exec rails server -p 5000 --pid $RAILS_ROOT/tmp/pids/$(hostname).pid -b 0.0.0.0 --env $RAILS_ENV
