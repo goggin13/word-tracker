@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 5.1.0'
+gem 'rails', '~> 5.2.0'
 gem 'sqlite3', '1.3.13'
 gem 'wordnik', '4.12'
 gem 'thin', '1.6.1'

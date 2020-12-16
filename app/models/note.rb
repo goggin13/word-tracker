@@ -11,7 +11,7 @@ class Note < ApplicationRecord
     Note
       .where(:user => user)
       .limit(n)
-      .order("RANDOM()")
+      .order(Arel.sql("RANDOM()"))
   end
 
   def back_rendered

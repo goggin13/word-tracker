@@ -14,7 +14,7 @@ RSpec.describe TextsController, type: :controller do
 
         VCR.use_cassette "hysteria_api_response" do
           post :create, params: {:Body => "Define hysteria"}
-          expect(response).to be_success
+          expect(response).to be_successful
         end
 
         word = Word.find_by_text("hysteria")

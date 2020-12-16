@@ -30,7 +30,7 @@ class User < ApplicationRecord
     Word
       .where(:user => self)
       .limit(1)
-      .order("RANDOM()")
+      .order(Arel.sql("RANDOM()"))
       .first
   end
 

@@ -4,6 +4,6 @@ class Tag < ApplicationRecord
   has_and_belongs_to_many :notes
 
   def random_notes(n=1)
-    notes.limit(n).order("RANDOM()")
+    notes.limit(n).order(Arel.sql("RANDOM()"))
   end
 end

@@ -21,7 +21,7 @@ RSpec.describe NotesController, type: :controller do
     it "returns a success response" do
       note = Note.create! valid_attributes.merge(:user_id => 1)
       get :index, {}
-      expect(response).to be_success
+      expect(response).to be_successful
     end
   end
 
@@ -29,7 +29,7 @@ RSpec.describe NotesController, type: :controller do
     it "returns a success response" do
       note = Note.create! valid_attributes.merge(:user_id => 1)
       get :show, params: {:id => note.to_param}
-      expect(response).to be_success
+      expect(response).to be_successful
     end
   end
 
@@ -41,7 +41,7 @@ RSpec.describe NotesController, type: :controller do
 
     it "returns a success response" do
       get :new, {}
-      expect(response).to be_success
+      expect(response).to be_successful
     end
   end
 
@@ -54,7 +54,7 @@ RSpec.describe NotesController, type: :controller do
     it "returns a success response" do
       note = Note.create! valid_attributes.merge(:user_id => @user.id)
       get :edit, params: {:id => note.to_param}
-      expect(response).to be_success
+      expect(response).to be_successful
     end
   end
 
@@ -87,7 +87,7 @@ RSpec.describe NotesController, type: :controller do
 
       it "returns a success response (i.e. to display the 'new' template)" do
         post :create, params: {:note => invalid_attributes}
-        expect(response).to be_success
+        expect(response).to be_successful
       end
     end
   end

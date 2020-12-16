@@ -25,5 +25,6 @@ module MyWords
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
     config.i18n.enforce_available_locales = true
+    config.active_record.sqlite3.represent_boolean_as_integer = true
   end
 end
